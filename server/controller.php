@@ -20,8 +20,33 @@
  */
 require("model.php");
 
-
-function readMoviesController(){
-    $movies = getAllMovies();
+function readController(){
+    $movies = getMovie();
     return $movies;
 }
+
+function updateController(){
+    /* Lecture des données de formulaire
+      On ne vérifie pas si les données sont valides, on suppose (faudra pas toujours...) que le client les a déjà
+      vérifiées avant de les envoyer 
+    */
+    $titre = $_REQUEST['titre'];
+    $realisateur = $_REQUEST['realisateur'];
+    $annee = $_REQUEST['annee'];
+    $duree = $_REQUEST['duree'];
+    $description = $_REQUEST['description'];
+    $categorie = $_REQUEST['categorie'];
+    $image = $_REQUEST['image'];
+    $url = $_REQUEST['url'];
+    $restriction = $_REQUEST['restriction'];
+    // Mise à jour du menu à l'aide de la fonction updateMenu décrite dans model.php
+    $ok = updateMovie($titre, $realisateur, $annee, $duree, $description, $categorie, $image, $url, $restriction);
+    // $ok est le nombre de ligne affecté par l'opération de mise à jour dans la BDD (voir model.php)
+    if ($ok!=0){
+      return "Le film $titre a été mis à jour";
+    }
+    else{
+      return false;
+    }
+  }
+  

@@ -25,7 +25,7 @@ function readController(){
     return $movies;
 }
 
-function updateController(){
+function addController(){
     /* Lecture des données de formulaire
       On ne vérifie pas si les données sont valides, on suppose (faudra pas toujours...) que le client les a déjà
       vérifiées avant de les envoyer 
@@ -40,7 +40,7 @@ function updateController(){
     $url = $_REQUEST['url'];
     $restriction = $_REQUEST['restriction'];
     // Mise à jour du menu à l'aide de la fonction updateMenu décrite dans model.php
-    $ok = updateMovie($titre, $realisateur, $annee, $duree, $description, $categorie, $image, $url, $restriction);
+    $ok = addMovie($titre, $realisateur, $annee, $duree, $description, $categorie, $image, $url, $restriction);
     // $ok est le nombre de ligne affecté par l'opération de mise à jour dans la BDD (voir model.php)
     if ($ok!=0){
       return "Le film $titre a été mis à jour";

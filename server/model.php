@@ -33,11 +33,12 @@ function getMovie() {
         return $res; // Retourne les résultats
     }
 //test
-function updateMovie($titre, $realisateur, $annee, $duree, $description, $categorie, $image, $url, $restriction) {
+function addMovie($titre, $realisateur, $annee, $duree, $description, $categorie, $image, $url, $restriction) {
     // Connexion à la base de données
+    
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     // Requête SQL pour mettre à jour le menu avec des paramètres
-    $sql = "INSERT INTO Movie (name, director, year, duration, description, category, image, url, restriction) 
+    $sql = "INSERT INTO Movie (name, director, year, length, description, id_category, image, trailer, min_age) 
             VALUES (:titre, :realisateur, :annee, :duree, :description, :categorie, :image, :url, :restriction)";
     // Prépare la requête SQL
     $stmt = $cnx->prepare($sql);

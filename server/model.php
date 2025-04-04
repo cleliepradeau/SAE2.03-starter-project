@@ -42,16 +42,17 @@ function updateMovie($titre, $realisateur, $annee, $duree, $description, $catego
     // Prépare la requête SQL
     $stmt = $cnx->prepare($sql);
     // Exécute la requête SQL avec les paramètres
-    $stmt->execute(array(
-        ':titre' => $titre,
-        ':realisateur' => $realisateur,
-        ':annee' => $annee,
-        ':duree' => $duree,
-        ':description' => $description,
-        ':categorie' => $categorie,
-        ':image' => $image,
-        ':url' => $url,
-        ':restriction' => $restriction
-    ));
-    return $stmt->rowCount(); // Retourne le nombre de lignes affectées par la mise à jour
+    $stmt->bindParam(':titre', $titre);
+    $stmt->bindParam(':realisateur', $realisateur);
+    $stmt->bindParam(':annee', $annee);
+    $stmt->bindParam(':duree', $duree);
+    $stmt->bindParam(':description', $description);
+    $stmt->bindParam(':categorie', $categorie);
+    $stmt->bindParam(':image', $image);
+    $stmt->bindParam(':url', $url);
+    $stmt->bindParam(':restriction', $restriction);
+    $stmt->execute();
+    // Récupère le nombre de lignes affectées par la requête
+    $res = $stmt->rowCount(); 
+    return $res; // Retourne le nombre de lignes affectées
 }

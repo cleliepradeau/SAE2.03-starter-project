@@ -53,16 +53,21 @@ function addController(){
     else{
       return "Aucun film n'a été ajouté";
     }
-
-  
   }
   
   function readControllerMovieDetails(){
     $id = $_REQUEST['id'] ?? null;
-  
     if (empty($id)) {
         return "erreur";
     }
-  
     return getMoviedetails($id);
   }
+
+  function readControllerMovieCategorie(){
+    $id = $_REQUEST['categorie'] ?? null;
+    if (empty($categorie)) {
+        return "erreur";
+    }
+    return getMovieCategorie($categorie);
+  }
+

@@ -23,7 +23,7 @@ DataMovie.requestMovieDetails = async function (id){
   return movies;
 }
 
-DataMovie.requestMovieCategorie = async function (id){
+DataMovie.requestMovieCategorie = async function (){
   // Récupération des films
   let answer = await fetch(HOST_URL + "server/script.php?todo=getMovieCategories");
   let categorie = await answer.json();
@@ -35,4 +35,3 @@ DataMovie.requestMovieCategorie = async function (id){
 export { DataMovie };
 
 
-https://mmi.unilim.fr/~pradeau49/SAE2.03-starter-project/server/script.php?todo=getCategorie

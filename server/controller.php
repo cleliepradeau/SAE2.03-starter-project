@@ -64,10 +64,13 @@ function addController(){
   }
 
   function readControllerMovieCategorie(){
-    $id = $_REQUEST['categorie'] ?? null;
-    if (empty($categorie)) {
-        return "erreur";
-    }
-    return getMovieCategorie($categorie);
+  // Récupération des paramètres de la requête
+  // On utilise l'opérateur de coalescence nulle (??) pour assigner une valeur par défaut si la clé n'existe pas
+  $categorie = $_REQUEST['categorie'] ?? null;
+
+  if (empty($categorie)) {
+      return "Erreur : Tous les champs doivent être remplis.";
   }
 
+  return getMoviecategorie($categorie);
+}

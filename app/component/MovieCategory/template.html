@@ -1,28 +1,5 @@
-<div class="card__details">
-  <div class="card__details__top">
-  <img
-    src="https://mmi.unilim.fr/~pradeau49/SAE2.03-starter-project/server/images/{{image}}"
-    alt="Affiche du film"
-    class="card__details__image"
-  />
-  <div class="card__details__content">
-    <h2 class="card__details__title">{{titre}}</h2>
-    <p class="card__details__desc">{{desc}}</p>
-    <p class="card__details__realisateur">Réalisateur : {{realisateur}}</p>
-    <p class="card__details__annee">Année : {{annee}}</p>
-    <p class="card__details__duree">Durée : {{duree}} minutes</p>
-    <p class="card__details__categorie">Catégorie : {{categorie}}</p>
-    <p class="card__details__age">Age minimum : {{age}} ans</p>
-  </div>
+<div class="categorie">
+  <ul class="categorie__list">
+    {{categories}}
+  </ul>
 </div>
-  <iframe
-      class="card__details__trailer"
-      src="{{url}}"
-      title="YouTube video player"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    >
-    </iframe>
-</div>
-

@@ -54,6 +54,33 @@ function addController(){
       return "Aucun film n'a été ajouté";
     }
   }
+
+
+  function addProfileController(){
+    /* Lecture des données de formulaire
+      On ne vérifie pas si les données sont valides, on suppose (faudra pas toujours...) que le client les a déjà
+      vérifiées avant de les envoyer 
+    */
+    $titre = $_REQUEST['nom'];
+    $image = $_REQUEST['image'];
+    $date_naissance = $_REQUEST['date_naissance'];
+
+    // On vérifie que les champs obligatoires sont remplis
+    if (empty($nom) || empty($image) || empty($date_naissance)) {
+        return "Tous les champs sont obligatoires.";
+    }
+    // Mise à jour du menu à l'aide de la fonction updateMenu décrite dans model.php
+    $ok = addProfile($nom, $image, $date_naissance);
+    // $ok est le nombre de ligne affecté par l'opération de mise à jour dans la BDD (voir model.php)
+    if ($ok!=0){
+      return "Le profil $nom a été ajoué";
+    }
+    else{
+      return "Aucun profil n'a été ajouté";
+    }
+  }
+
+
   
   function readControllerMovieDetails(){
     $id = $_REQUEST['id'] ?? null;
@@ -63,14 +90,15 @@ function addController(){
     return getMoviedetails($id);
   }
 
-  function readControllerMovieCategorie(){
-  // Récupération des paramètres de la requête
-  // On utilise l'opérateur de coalescence nulle (??) pour assigner une valeur par défaut si la clé n'existe pas
-  $categorie = $_REQUEST['categorie'] ?? null;
+  
+function readControllerCategorie() {
+  return getAllCategories();
+}
 
+  function readControllerMovieCategorie(){
+  $categorie = $_REQUEST['categorie'] ?? null;
   if (empty($categorie)) {
       return "Erreur : Tous les champs doivent être remplis.";
   }
-
   return getMoviecategorie($categorie);
-}
+  }

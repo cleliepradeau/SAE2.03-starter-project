@@ -3,7 +3,11 @@
 *::before {
   box-sizing: border-box;
 }
-
+body{
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--ff-sans);
+}
 ul {
   padding: 0;
   margin: 0;

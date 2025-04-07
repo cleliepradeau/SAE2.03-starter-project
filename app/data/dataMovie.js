@@ -23,13 +23,21 @@ DataMovie.requestMovieDetails = async function (id){
   return movies;
 }
 
-DataMovie.requestMovieCategorie = async function (){
-  // Récupération des films
-  let answer = await fetch(HOST_URL + "server/script.php?todo=getMovieCategories");
-  let categorie = await answer.json();
-  return categorie;
-}
+DataMovie.requestCategories = async function () {
+  let answer = await fetch(HOST_URL + "/server/script.php?todo=getCategories");
+  let categories = await answer.json();
+  return categories;
+};
 
+DataMovie.requestMoviecategorie = async function (categorie) {
+  let answer = await fetch(
+    HOST_URL +
+      "/server/script.php?todo=getMovieCategories&categorie=" +
+      categorie
+  );
+  let movie = await answer.json();
+  return movie;
+};
 
 // On exporte la fonction DataMovie.requestMovies
 export { DataMovie };

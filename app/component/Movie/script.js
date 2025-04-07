@@ -5,6 +5,9 @@ let Movie = {};
 
 Movie.format = function (movies) {
   let html = "";
+  if (movies.length === 0) {
+    return "<p>Aucun film trouvé</p>";
+  }
   for (const movie of movies) {
     let movieHtml = template;
     movieHtml = movieHtml.replace("{{id}}", movie.id);

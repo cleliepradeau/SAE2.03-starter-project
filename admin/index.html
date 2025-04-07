@@ -14,6 +14,9 @@
       import {MovieForm} from './component/MovieForm/script.js';
       import {DataMovie} from './data/dataMovie.js';
 
+      import {ProfileForm} from './component/ProfileForm/script.js';
+      import {DataProfile} from './data/dataProfile.js';
+
       import { Log } from "./component/Log/script.js";
 
       window.C = {};
@@ -30,6 +33,7 @@
       C.start = function () {
         V.renderLog("Démarrage de l'application");
         V.renderMovie("C.handlerUpdate()");
+        V.renderProfile("C.handlerUpdate()");
       };
 
       window.V = {};
@@ -42,6 +46,11 @@
       V.renderMovie = function (handler) {
         let content = document.querySelector("#addMovie");
         content.innerHTML = MovieForm.format(handler);
+      };
+
+      V.renderProfile = function (handler) {
+        let content = document.querySelector("#addProfile");
+        content.innerHTML = ProfileForm.format(handler);
       };
 
       C.start();

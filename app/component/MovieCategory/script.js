@@ -4,6 +4,7 @@ let template = await templateFile.text();
 let MovieCategory = {};
 
 MovieCategory.format = function (categories) {
+  console.log(categories);
   let listHTML = categories
     .map(
       (cat) =>

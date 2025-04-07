@@ -57,6 +57,29 @@ function addMovie($titre, $realisateur, $annee, $duree, $description, $categorie
     $res = $stmt->rowCount(); 
     return $res; // Retourne le nombre de lignes affectées
 }
+
+
+function addProfile($nom, $image, $date_naissance) {
+    // Connexion à la base de données
+    
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    // Requête SQL pour mettre à jour le menu avec des paramètres
+    $sql = "INSERT INTO Profile (nom, image, date_naissance) 
+            VALUES (:nom, :image, :date_naissance)";
+    // Prépare la requête SQL
+    $stmt = $cnx->prepare($sql);
+    // Exécute la requête SQL avec les paramètres
+    $stmt->bindParam(':nom', $nom);
+    $stmt->bindParam(':image', $image);
+    $stmt->bindParam(':date_naissance', $date_naissance);
+    $stmt->execute();
+    // Récupère le nombre de lignes affectées par la requête
+    $res = $stmt->rowCount(); 
+    return $res; // Retourne le nombre de lignes affectées
+}
+
+
+
 function getMoviedetails($id){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     $sql = "SELECT Movie.id, Movie.name, image, description, director, year, length, Category.name AS category_name, min_age, trailer 
@@ -90,4 +113,15 @@ function getMoviecategorie($categorie) {
     // Conversion des lignes récupérées en tableau d'objets (chaque ligne devient un objet)
     $res = $stmt->fetchAll(PDO::FETCH_OBJ);
     return $res; // Retourne les résultats
+}
+
+function getAllCategories() {
+    // Connexion à la base de données
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    // Requête SQL pour récupérer les noms de toutes les catégories
+    $sql = "SELECT name FROM Category";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    $res = $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $res;
 }

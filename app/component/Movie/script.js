@@ -5,12 +5,13 @@ let Movie = {};
 
 Movie.format = function (movies) {
   let html = "";
-  movies.forEach((movie) => {
+  for (const movie of movies) {
     let movieHtml = template;
+    movieHtml = movieHtml.replace("{{id}}", movie.id);
     movieHtml = movieHtml.replace("{{titre}}", movie.name);
     movieHtml = movieHtml.replace("{{image}}", movie.image);
     html += movieHtml;
-  });
+  }
   return html;
 };
 

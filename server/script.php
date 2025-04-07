@@ -54,6 +54,9 @@ if ( isset($_REQUEST['todo']) ){
     case 'addMovie':
       $data = addController();
       break;
+    case 'getMovieDetails':
+      $data = readControllerMovieDetails();
+      break;
 
     case 'getMovie': // si la valeur de 'todo' est 'getMovie', on appelle la fonction readController()
       $data = readController();

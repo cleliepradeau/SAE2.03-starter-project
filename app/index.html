@@ -10,12 +10,14 @@
   <body>
     <header id="header"></header>
 
+    <section class="detail" id="detail"></section>
     <section class="cards" id="content"></section>
+
 
     <script type="module">
       import { NavBar } from "./component/NavBar/script.js";
       import { Movie } from "./component/Movie/script.js";
-
+      import { Moviedetail } from "./component/MovieDetail/script.js";
 
       import { DataMovie } from "./data/dataMovie.js";
       // Controleur
@@ -24,9 +26,7 @@
       window.C = {};
 
       C.handlerAbout = function () {
-        alert(
-          "Ceci est une base de projet pour la SAE2.03 édition 2025. Bonne chance !"
-        );
+        C.getMovie();
       };
 
       C.start = function () {
@@ -38,8 +38,17 @@
         La fonction affiche sur la page la collection de films par défaut
       */
       C.getMovie = async function () {
+
+        let detail = document.querySelector("#detail");
+        detail.innerHTML = ""; 
         let data = await DataMovie.requestMovies(); // On récupère les données par défaut et on attend avec await
         V.renderMovie(data); // Affiche les données
+      };
+
+      C.handlerDetail = async function (id) {
+        let data = await DataMovie.requestMovieDetails(id); // On récupère les données par défaut et on attend avec await
+        V.renderDetail(data); // Affiche les données
+        
       };
 
 
@@ -68,6 +77,11 @@
        V.renderMovie = function (data) {
         let content = document.querySelector("#content");
         content.innerHTML = Movie.format(data);
+      };
+
+      V.renderDetail = function (data) {
+        let content = document.querySelector("#detail");
+        content.innerHTML = Moviedetail.format(data);
       };
 
       C.start(); // Démarre l'application

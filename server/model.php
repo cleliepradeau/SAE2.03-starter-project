@@ -57,3 +57,17 @@ function addMovie($titre, $realisateur, $annee, $duree, $description, $categorie
     $res = $stmt->rowCount(); 
     return $res; // Retourne le nombre de lignes affectées
 }
+function getMoviedetails($id){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT Movie.id, Movie.name, image, description, director, year, length, Category.name AS category_name, min_age, trailer 
+            FROM Movie 
+            INNER JOIN Category ON Movie.id_category = Category.id 
+            WHERE Movie.id = :id
+";
+
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+    $stmt->execute(); 
+    $res = $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $res; 
+}

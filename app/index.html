@@ -32,11 +32,12 @@
         C.getMovie();
       };
 
-      C.start = function () {
-        V.renderNavBar("C.handlerAbout()");
-        console.log("C.start");
-        V.renderMovieCategorie();
-        C.getMovie();
+      C.start = async function () {
+      let profiles = await DataProfile.read();
+      V.renderNavBar("C.handlerAbout()", "C.handlerProfile()", profiles);
+      console.log("C.start");
+      V.renderMovieCategorie();
+      C.getMovie();
       };
 
         /* C.getMovie
@@ -63,6 +64,14 @@
       C.handlerProfile = async function () {
         const select = document.querySelector("#profile-select");
         const selectedOption = select.selectedOptions[0];
+        const profileName = selectedOption.value;
+        const dob = selectedOption.getAttribute("data-dob");
+        const imageFilename = selectedOption.getAttribute("data-img");
+        const picture = document.querySelector("#profile-image");
+        const base =
+          "https://mmi.unilim.fr/~pradeau49/SAE2.03-starter-project/server/images/";
+        picture.src = base + imageFilename;
+        V.renderMovie(data);
       }
 
 
@@ -76,9 +85,9 @@
        * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
        * formaté par le composant NavBar.
        */
-      V.renderNavBar = function (hAbout) {
-        let header = document.querySelector("#header");
-        header.innerHTML = NavBar.format(hAbout);
+       V.renderNavBar = function (hAbout, hProfile, profiles) {
+      let header = document.querySelector("#header");
+      header.innerHTML = NavBar.format(hAbout, hProfile, profiles);
       };
 
        /**

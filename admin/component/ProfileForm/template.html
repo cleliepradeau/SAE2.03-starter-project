@@ -1,31 +1,9 @@
-<div class="addMovie">
-  <h4 class="addMovie__title">Ajouter un film</h4>
-  <form class="addMovie__form">
-    <input class="addMovie__option" required type="text" name="titre" placeholder="Saisir une titre de film">
-    <input class="addMovie__option" required type="text" name="realisateur" placeholder="Saisir un nom de réalisateur">
-    <input class="addMovie__option" type="number" id="annee" name="annee" min="1800" max="2025"
-      placeholder="année de sortie" />
-    <input class="addMovie__option" type="number" id="duree" name="duree" min="0" max="1000"
-      placeholder="durée en minutes" />
-    <input class="addMovie__option" required type="text" name="description" placeholder="Saisir une description">
-
-    <select class="addMovie__option" name="categories" placeholder="Saisir une catégorie">
-      <option value="1">Action</option>
-      <option value="2">comedie</option>
-      <option value="3">drame</option>
-      <option value="4">science-fiction</option>
-      <option value="5">animation</option>
-      <option value="6">thriller</option>
-      <option value="7">Horreur</option>
-      <option value="8">Aventure</option>
-      <option value="9">Fantaisie</option>
-      <option value="10">Documentaire</option>
-    </select>
-    <input class="addMovie__option" required type="text" name="image"
-      placeholder="Saisir le nom du fichier de l'image du flim">
-    <input class="addMovie__option" required type="text" name="url" placeholder="Saisir l'url du trailer">
-    <input class="addMovie__option" required type="number" name="restriction"
-      placeholder="Saisir une restriction d'âge">
-    <input class="addMovie__button" onclick="{{handler}}" type="button" value="Update" name="todo">
+<div class="addProfile">
+  <h4 class="addProfile__title">Ajouter un profile</h4>
+  <form class="addProfile__form">
+    <input class="addProfile__option" required type="text" name="nom" placeholder="Saisir un nom">
+    <input class="addProfile__option" required type="text" name="image" placeholder="Saisir l'url d'une image">
+    <input class="addProfile__option" type="date" name="date_naissance" placeholder="date de naissance" />
+    <input class="addProfile__button" onclick="{{handler}}" type="button" value="Update" name="todo">
   </form>
 </div>

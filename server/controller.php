@@ -25,6 +25,11 @@ function readController(){
     return $movies;
 }
 
+function readControllerProfile(){
+  $profiles = readProfile();
+  return $profiles;
+}
+
 function addController(){
     /* Lecture des données de formulaire
       On ne vérifie pas si les données sont valides, on suppose (faudra pas toujours...) que le client les a déjà
@@ -61,7 +66,7 @@ function addController(){
       On ne vérifie pas si les données sont valides, on suppose (faudra pas toujours...) que le client les a déjà
       vérifiées avant de les envoyer 
     */
-    $titre = $_REQUEST['nom'];
+    $nom = $_REQUEST['nom'];
     $image = $_REQUEST['image'];
     $date_naissance = $_REQUEST['date_naissance'];
 
@@ -82,23 +87,23 @@ function addController(){
 
 
   
-  function readControllerMovieDetails(){
-    $id = $_REQUEST['id'] ?? null;
-    if (empty($id)) {
-        return "erreur";
-    }
-    return getMoviedetails($id);
+function readControllerMovieDetails(){
+  $id = $_REQUEST['id'] ?? null;
+  if (empty($id)) {
+      return "erreur";
   }
+  return getMoviedetails($id);
+}
 
   
 function readControllerCategorie() {
   return getAllCategories();
 }
 
-  function readControllerMovieCategorie(){
+function readControllerMovieCategorie(){
   $categorie = $_REQUEST['categorie'] ?? null;
   if (empty($categorie)) {
       return "Erreur : Tous les champs doivent être remplis.";
   }
   return getMoviecategorie($categorie);
-  }
+}

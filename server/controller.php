@@ -21,9 +21,16 @@
 require("model.php");
 
 function readController(){
-    $movies = getMovie();
-    return $movies;
+  $ageLimit = $_REQUEST['ageLimit'] ?? null;
+
+  if ($ageLimit !== null) {
+      $ageLimit = intval($ageLimit); 
+  }
+
+  $movies = getMovie($ageLimit);
+  return $movies;
 }
+
 
 function readControllerProfile(){
   $profiles = readProfile();
@@ -74,6 +81,10 @@ function addController(){
     if (empty($nom) || empty($image) || empty($date_naissance)) {
         return "Tous les champs sont obligatoires.";
     }
+    if (profileExists($nom)) {
+      return "Un profil avec ce nom existe déjà.";
+  }
+    
     // Mise à jour du menu à l'aide de la fonction updateMenu décrite dans model.php
     $ok = addProfile($nom, $image, $date_naissance);
     // $ok est le nombre de ligne affecté par l'opération de mise à jour dans la BDD (voir model.php)

@@ -10,8 +10,21 @@ let DataMovie = {};
 //   return movies;
 // };
 
-DataMovie.requestMovies = async function () {
-  let answer = await fetch(HOST_URL + "/server/script.php?todo=getMovie");
+DataMovie.requestMovies = async function (ageLimit = 100) {
+  let answer = await fetch(HOST_URL + "/server/script.php?todo=getMovie&ageLimit=" + ageLimit);
+  let movies = await answer.json();
+
+  let filtered = movies.filter(movie => {
+    return parseInt(movie.ageLimit) <= ageLimit; 
+  });
+
+  return filtered;
+};
+
+
+
+DataMovie.requestMovies = async function (profileId) {
+  let answer = await fetch(HOST_URL + "/server/script.php?todo=getMovie&profileId=" + profileId);
   let movies = await answer.json();
   return movies;
 };

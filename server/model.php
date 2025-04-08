@@ -19,19 +19,26 @@ define("DBLOGIN", "pradeau49");
 define("DBPWD", "pradeau49");
 
 
-function getMovie() {
-        // Connexion à la base de données
-        $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-        // Requête SQL pour récupérer le menu avec des paramètres
-        $sql = "select id, name, image from Movie";
-        // Prépare la requête SQL
+function getMovie($ageLimit = null){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+
+    if ($ageLimit !== null) {
+        $sql = "SELECT id, name, image FROM Movie WHERE min_age <= :ageLimit";
         $stmt = $cnx->prepare($sql);
-        // Exécute la requête SQL
+        $stmt->bindParam(':ageLimit', $ageLimit, PDO::PARAM_INT);
         $stmt->execute();
-        // Récupère les résultats de la requête sous forme d'objets
         $res = $stmt->fetchAll(PDO::FETCH_OBJ);
-        return $res; // Retourne les résultats
+        
+        return $res;
+    
+    } else {
+        $sql = "SELECT id, name, image FROM Movie";
+        $answer = $cnx->query($sql);
+        $res = $answer->fetchAll(PDO::FETCH_OBJ);
+        
+        return $res;
     }
+}
 
     function readProfile() {
         // Connexion à la base de données
@@ -44,8 +51,29 @@ function getMovie() {
         $stmt->execute();
         // Récupère les résultats de la requête sous forme d'objets
         $res = $stmt->fetchAll(PDO::FETCH_OBJ);
-        return $res; // Retourne les résultats
-    }
+        // Retourne les résultats
+        return $res;
+}
+
+function getMovieByAge($age) {
+    // Connexion à la base de données
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+
+    // Requête SQL pour récupérer les films en fonction de l'âge
+    $sql = "SELECT id, name, image, min_age
+            FROM Movie
+            WHERE min_age <= :age";  // Filtre les films dont la restriction d'âge est <= à l'âge de l'utilisateur
+
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':age', $age, PDO::PARAM_INT);
+    $stmt->execute();
+
+    // Récupère les résultats sous forme d'objets
+    $res = $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $res;  // Retourne les résultats
+}
+
+
 
 //test
 function addMovie($titre, $realisateur, $annee, $duree, $description, $categorie, $image, $url, $restriction) {
@@ -91,6 +119,14 @@ function addProfile($nom, $image, $date_naissance) {
     // Récupère le nombre de lignes affectées par la requête
     $res = $stmt->rowCount(); 
     return $res; // Retourne le nombre de lignes affectées
+}
+function profileExists($nom) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT COUNT(*) FROM Profile WHERE nom = :nom";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':nom', $nom);
+    $stmt->execute();
+    return $stmt->fetchColumn() > 0;
 }
 
 

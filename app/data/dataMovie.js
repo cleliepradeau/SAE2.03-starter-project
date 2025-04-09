@@ -11,15 +11,11 @@ let DataMovie = {};
 // };
 
 DataMovie.requestMovies = async function (profileId) {
-  let answer = await fetch(HOST_URL + "/server/script.php?todo=getMovie&profileId=" + profileId);
-  let movies = await answer.json();
-  return movies;
-};
-
-
-
-DataMovie.requestMovies = async function (profileId) {
-  let answer = await fetch(HOST_URL + "/server/script.php?todo=getMovie&profileId=" + profileId);
+  let url = HOST_URL + "/server/script.php?todo=getMovie";
+  if (profileId) {
+    url += "&profileId=" + profileId;  // Ajoute l'ID du profil à la requête
+  }
+  let answer = await fetch(url);
   let movies = await answer.json();
   return movies;
 };

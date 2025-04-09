@@ -62,20 +62,21 @@
       };
 
       C.handlerProfile = async function () {
-        const select = document.querySelector("#profile-select");
-        const selectedOption = select.selectedOptions[0];
-        const profileName = selectedOption.value;
-        const dob = selectedOption.getAttribute("data-dob");
-        const imageFilename = selectedOption.getAttribute("data-img");
-        const picture = document.querySelector("#profile-image");
-        const base =
-          "https://mmi.unilim.fr/~pradeau49/SAE2.03-starter-project/server/images/";
-        picture.src = base + imageFilename;
-        // Appel de films filtrés par ID de profil
-        let data = await DataMovie.requestMovies(profileId);
-        V.renderMovie(data);
-      }
-
+      const select = document.querySelector("#profile-select");
+      const selectedOption = select.selectedOptions[0]; // Récupère la première option sélectionnée
+      console.log(selectedOption);
+      const profileId = selectedOption.value;  // Récupère le profileId
+      console.log(profileId);
+      const profileName = selectedOption.getAttribute("data-name");
+      const dob = selectedOption.getAttribute("data-dob");
+      const imageFilename = selectedOption.getAttribute("data-img");
+      const picture = document.querySelector("#profile-image");
+      const base = "https://mmi.unilim.fr/~pradeau49/SAE2.03-starter-project/server/images/";
+      picture.src = base + imageFilename;
+      // Appel de films filtrés par ID de profil
+      let data = await DataMovie.requestMovies(profileId); // Remplacer profileId
+      V.renderMovie(data);
+    };
 
       // Vue (contient tout ce qui est relatif à l'affichage)
       window.V = {};

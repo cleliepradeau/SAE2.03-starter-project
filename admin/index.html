@@ -22,22 +22,31 @@
 
       window.C = {};
 
-      C.handlerProfile = async function() {
-  let form = document.querySelector('.addProfile__form');
-  
-  // Validation des champs
-  if (!form.nom.value || !form.image.value || !form.date_naissance.value) {
-    alert("Tous les champs doivent être remplis !");
-    return;
-  }
 
-  // Si tous les champs sont remplis, on peut envoyer les données
-  let fd = new FormData(form);
-  let res = await DataProfile.add(fd);
+      
+      C.handlerUpdate = async function() {
+      let form = document.querySelector('.addMovie__form');
+      let fd = new FormData(form);
+      let res = await DataMovie.add(fd);
+      V.renderLog(res);
+    };
+
+      C.handlerProfile = async function() {
+      let form = document.querySelector('.addProfile__form');
   
-  // Affichage du résultat dans le log
-  V.renderLog(res);
-};
+      // Validation des champs
+      if (!form.nom.value || !form.image.value || !form.date_naissance.value) {
+      alert("Tous les champs doivent être remplis !");
+      return;
+      }
+
+      // Si tous les champs sont remplis, on peut envoyer les données
+      let fd = new FormData(form);
+      let res = await DataProfile.add(fd);
+  
+      // Affichage du résultat dans le log
+      V.renderLog(res);
+    };
 
 
       C.start = function () {

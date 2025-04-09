@@ -19,59 +19,46 @@ define("DBLOGIN", "pradeau49");
 define("DBPWD", "pradeau49");
 
 
-function getMovie($ageLimit = null){
+function getMovie($age = 0) {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-
-    if ($ageLimit !== null) {
-        $sql = "SELECT id, name, image FROM Movie WHERE min_age <= :ageLimit";
-        $stmt = $cnx->prepare($sql);
-        $stmt->bindParam(':ageLimit', $ageLimit, PDO::PARAM_INT);
-        $stmt->execute();
-        $res = $stmt->fetchAll(PDO::FETCH_OBJ);
-        
-        return $res;
     
+    // Filtrer les films en fonction de l'âge
+    if ($age > 0) {
+        $sql = "SELECT id, name, image FROM Movie WHERE min_age <= :age";
+        $stmt = $cnx->prepare($sql);
+        $stmt->bindParam(':age', $age, PDO::PARAM_INT);
     } else {
         $sql = "SELECT id, name, image FROM Movie";
-        $answer = $cnx->query($sql);
-        $res = $answer->fetchAll(PDO::FETCH_OBJ);
-        
-        return $res;
-    }
-}
-
-    function readProfile() {
-        // Connexion à la base de données
-        $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-        // Requête SQL pour récupérer le menu avec des paramètres
-        $sql = "select id, nom, image , date_naissance from Profile";
-        // Prépare la requête SQL
         $stmt = $cnx->prepare($sql);
-        // Exécute la requête SQL
-        $stmt->execute();
-        // Récupère les résultats de la requête sous forme d'objets
-        $res = $stmt->fetchAll(PDO::FETCH_OBJ);
-        // Retourne les résultats
-        return $res;
-}
+    }
 
-function getMovieByAge($age) {
-    // Connexion à la base de données
-    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-
-    // Requête SQL pour récupérer les films en fonction de l'âge
-    $sql = "SELECT id, name, image, min_age
-            FROM Movie
-            WHERE min_age <= :age";  // Filtre les films dont la restriction d'âge est <= à l'âge de l'utilisateur
-
-    $stmt = $cnx->prepare($sql);
-    $stmt->bindParam(':age', $age, PDO::PARAM_INT);
     $stmt->execute();
-
-    // Récupère les résultats sous forme d'objets
-    $res = $stmt->fetchAll(PDO::FETCH_OBJ);
-    return $res;  // Retourne les résultats
+    $movies = $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $movies;
 }
+
+function calculateAge($birthDate) {
+    $birthDate = new DateTime($birthDate);
+    $today = new DateTime('today');
+    return $birthDate->diff($today)->y;
+}
+
+function readProfile() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT id, nom, image, date_naissance FROM Profile";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    $profiles = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+    // Remplacer la boucle foreach par une boucle for
+    for ($i = 0; $i < count($profiles); $i++) {
+        $profiles[$i]->age = calculateAge($profiles[$i]->date_naissance);
+    }
+
+    return $profiles;
+}
+
+
 
 
 

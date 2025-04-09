@@ -20,16 +20,36 @@
  */
 require("model.php");
 
-function readController(){
-  $ageLimit = $_REQUEST['ageLimit'] ?? null;
-
-  if ($ageLimit !== null) {
-      $ageLimit = intval($ageLimit); 
+function readController() {
+  $profileId = $_REQUEST['profileId'] ?? null;
+  
+  if ($profileId) {
+    $profiles = readProfile();  // Cette fonction retourne un tableau d'objets de profils
+    
+    // Trouver le profil sélectionné par son ID en utilisant une boucle for
+    $profile = null;
+    for ($i = 0; $i < count($profiles); $i++) {
+        if ($profiles[$i]->id == $profileId) {
+            $profile = $profiles[$i];
+            break;
+        }
+    }
+    
+    if ($profile) {
+        $age = $profile->age;
+    } else {
+        $age = 0;  // Si aucun profil n'est sélectionné, âge = 0
+    }
+  } else {
+    $age = 0;  // Si aucun profil n'est sélectionné, âge = 0
   }
 
-  $movies = getMovie($ageLimit);
+  // Passer l'âge au modèle pour filtrer les films
+
+  $movies = getMovie($age);  // Filtrage par âge
   return $movies;
 }
+
 
 
 function readControllerProfile(){

@@ -71,6 +71,8 @@
         const base =
           "https://mmi.unilim.fr/~pradeau49/SAE2.03-starter-project/server/images/";
         picture.src = base + imageFilename;
+        // Appel de films filtrés par ID de profil
+        let data = await DataMovie.requestMovies(profileId);
         V.renderMovie(data);
       }
 

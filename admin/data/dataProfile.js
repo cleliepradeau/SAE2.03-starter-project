@@ -29,13 +29,13 @@ DataProfile.add = async function (fdata) {
     return data;
   };
 
-  // DataProfile.readProfiles = async function () {
-  //   let answer = await fetch(
-  //     HOST_URL + "/server/script.php?todo=readProfiles"
-  //   );
-  //   let data = await answer.json();
-  //   return data;
-  // };
+  DataProfile.readProfile = async function () {
+    let answer = await fetch(
+      HOST_URL + "/server/script.php?todo=readProfile"
+    );
+    let data = await answer.json();
+    return data;
+  };
 // On exporte la fonction DataProfile.requestProfiles
 export { DataProfile };
 

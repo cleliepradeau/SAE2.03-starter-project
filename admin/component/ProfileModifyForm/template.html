@@ -1,11 +1,11 @@
 <div class="updateProfile">
   <h4 class="updateProfile__title">Modifier un profile</h4>
   <form class="updateProfile__form">
-    <select id="profile-select" class="updateProfile__form" onchange="{{handler}}">
+    <select id="profile-select"  name="id" class="updateProfile__form" onchange="{{hProfile}}">
       {{profile}}
     </select>
-    <input class="updateProfile__option" required type="text" name="nom" placeholder="Saisir un nom">
-    <input class="updateProfile__option" required type="text" name="image" placeholder="Saisir l'url d'une image">
+    <input class="updateProfile__option" type="text" required name="nom" placeholder="Saisir un nom">
+    <input class="updateProfile__option" type="text" required name="image" placeholder="Saisir l'url d'une image">
     <input class="updateProfile__option" type="date" name="date_naissance" placeholder="date de naissance" />
     <input class="updateProfile__button" onclick="{{handler}}" type="button" value="Update" name="todo">
   </form>

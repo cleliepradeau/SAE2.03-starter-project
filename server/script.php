@@ -59,6 +59,10 @@ if ( isset($_REQUEST['todo']) ){
       $data = addProfileController();
       break;
 
+    case 'modifyProfile':
+      $data = modifyProfileController();
+      break;
+
     case 'getMovie': // si la valeur de 'todo' est 'getMovie', on appelle la fonction readController()
       $data = readController();
       break;

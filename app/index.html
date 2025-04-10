@@ -40,15 +40,30 @@
       C.getMovie();
       };
 
-        /* C.getMovie
-        La fonction affiche sur la page la collection de films par défaut
+      /* C.getMovie
+      La fonction affiche sur la page la collection de films par défaut
       */
       C.getMovie = async function () {
-        let detail = document.querySelector("#detail");
-        detail.innerHTML = ""; 
-        let data = await DataMovie.requestMovies(); // On récupère les données par défaut et on attend avec await
-        V.renderMovie(data); // Affiche les données
+      let detail = document.querySelector("#detail");
+      detail.innerHTML = "";
+
+      // Récupère l'ID du profil s'il est sélectionné
+      const select = document.querySelector("#profile-select");
+      const profileId = select ? select.value : null;
+
+      let data;
+
+      if (profileId) {
+      // Récupère uniquement les films adaptés à ce profil
+        data = await DataMovie.requestMovies(profileId);
+      } else {
+      // Aucun profil sélectionné → tout afficher
+        data = await DataMovie.requestMovies();
+      }
+
+      V.renderMovie(data);
       };
+
 
       C.handlerDetail = async function (id) {
         let data = await DataMovie.requestMovieDetails(id); // On récupère les données par défaut et on attend avec await
@@ -56,17 +71,19 @@
       };
 
       C.handlerCategorie = async function (categorie) {
-        console.log("Catégorie sélectionnée :", categorie);
-        let data = await DataMovie.requestMoviecategorie(categorie);
-        V.renderMovie(data);
+      console.log("Catégorie sélectionnée :", categorie);
+      const select = document.querySelector("#profile-select");
+      const profileId = select ? select.value : null; // récupère l'ID du profil sélectionné (s'il y en a un)
+      let data = await DataMovie.requestMoviecategorie(categorie, profileId);
+      V.renderMovie(data);
       };
+
 
       C.handlerProfile = async function () {
       const select = document.querySelector("#profile-select");
       const selectedOption = select.selectedOptions[0]; // Récupère la première option sélectionnée
       console.log(selectedOption);
-      const profileId = selectedOption.value;  // Récupère le profileId
-      console.log(profileId);
+      const profileId = selectedOption.value;  // ← simple, efficace
       const profileName = selectedOption.getAttribute("data-name");
       const dob = selectedOption.getAttribute("data-dob");
       const imageFilename = selectedOption.getAttribute("data-img");

@@ -117,6 +117,28 @@ function profileExists($nom) {
 }
 
 
+function modifyProfile($nom, $image, $date_naissance, $id) {
+    // Connexion à la base de données
+    
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    // Requête SQL pour mettre à jour le menu avec des paramètres
+    $sql = "UPDATE Profile 
+            SET nom = :nom, image = :image, date_naissance = :date_naissance 
+            WHERE id = :id";
+    // Prépare la requête SQL
+    $stmt = $cnx->prepare($sql);
+    // Exécute la requête SQL avec les paramètres
+    $stmt->bindParam(':nom', $nom);
+    $stmt->bindParam(':image', $image);
+    $stmt->bindParam(':date_naissance', $date_naissance);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    // Récupère le nombre de lignes affectées par la requête
+    $res = $stmt->rowCount(); 
+    return $res; // Retourne le nombre de lignes affectées
+}
+
+
 
 function getMoviedetails($id){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
@@ -132,26 +154,31 @@ function getMoviedetails($id){
     return $res; 
 }
 
-function getMoviecategorie($categorie) {
-    // Connexion à la base de données
+function getMoviecategorie($categorie, $age = 0) {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    // Requête SQL pour récupérer les informations du film en fonction du nom
-    $sql = "SELECT Movie.id, Movie.name, image 
-            FROM Movie 
-            INNER JOIN Category ON Movie.id_category = Category.id 
-            WHERE LOWER(Category.name) = LOWER(:categorie)
-";
+    
+    if ($age > 0) {
+        $sql = "SELECT Movie.id, Movie.name, image 
+                FROM Movie 
+                INNER JOIN Category ON Movie.id_category = Category.id 
+                WHERE LOWER(Category.name) = LOWER(:categorie)
+                AND min_age <= :age";
+        $stmt = $cnx->prepare($sql);
+        $stmt->bindParam(':categorie', $categorie, PDO::PARAM_STR);
+        $stmt->bindParam(':age', $age, PDO::PARAM_INT);
+    } else {
+        $sql = "SELECT Movie.id, Movie.name, image 
+                FROM Movie 
+                INNER JOIN Category ON Movie.id_category = Category.id 
+                WHERE LOWER(Category.name) = LOWER(:categorie)";
+        $stmt = $cnx->prepare($sql);
+        $stmt->bindParam(':categorie', $categorie, PDO::PARAM_STR);
+    }
 
-    // Préparation de la requête SQL
-    $stmt = $cnx->prepare($sql);
-    // Liaison du paramètre :id avec la variable $categorie){
-    $stmt->bindParam(':categorie', $categorie   , PDO::PARAM_STR);
-    // Exécution de la requête
     $stmt->execute(); 
-    // Conversion des lignes récupérées en tableau d'objets (chaque ligne devient un objet)
-    $res = $stmt->fetchAll(PDO::FETCH_OBJ);
-    return $res; // Retourne les résultats
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
+
 
 function getAllCategories() {
     // Connexion à la base de données

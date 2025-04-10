@@ -117,6 +117,32 @@ function addController(){
   }
 
 
+  function modifyProfileController(){
+    /* Lecture des données de formulaire
+      On ne vérifie pas si les données sont valides, on suppose (faudra pas toujours...) que le client les a déjà
+      vérifiées avant de les envoyer 
+    */
+    $nom = $_REQUEST['nom'];
+    $image = $_REQUEST['image'];
+    $date_naissance = $_REQUEST['date_naissance'];
+    $id = $_REQUEST['id'];
+
+    // On vérifie que les champs obligatoires sont remplis
+    if (empty($nom) || empty($image) || empty($date_naissance) || empty($id)) {
+        return "Tous les champs sont obligatoires.";
+    }
+    $ok = modifyProfile($nom, $image, $date_naissance, $id);
+    // $ok est le nombre de ligne affecté par l'opération de mise à jour dans la BDD (voir model.php)
+    if ($ok!=0){
+      return "Le profil $nom a été mis à jour";
+    }
+    else{
+      return "Aucun profil n'a été mis à jour";
+    }
+  }
+
+
+
   
 function readControllerMovieDetails(){
   $id = $_REQUEST['id'] ?? null;
@@ -133,8 +159,24 @@ function readControllerCategorie() {
 
 function readControllerMovieCategorie(){
   $categorie = $_REQUEST['categorie'] ?? null;
+  $profileId = $_REQUEST['profileId'] ?? null;
+
   if (empty($categorie)) {
       return "Erreur : Tous les champs doivent être remplis.";
   }
-  return getMoviecategorie($categorie);
+
+  $age = 0;
+
+  if ($profileId) {
+      $profiles = readProfile();
+      for ($i = 0; $i < count($profiles); $i++) {
+          if ($profiles[$i]->id == $profileId) {
+              $age = $profiles[$i]->age;
+              break;
+          }
+      }
+  }
+
+  return getMoviecategorie($categorie, $age);
 }
+

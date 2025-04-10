@@ -33,12 +33,16 @@ DataMovie.requestCategories = async function () {
   return categories;
 };
 
-DataMovie.requestMoviecategorie = async function (categorie) {
-  let answer = await fetch(
-    HOST_URL + "/server/script.php?todo=getMovieCategories&categorie=" + categorie );
+DataMovie.requestMoviecategorie = async function (categorie, profileId) {
+  let url = HOST_URL + "/server/script.php?todo=getMovieCategories&categorie=" + categorie;
+  if (profileId) {
+    url += "&profileId=" + profileId;
+  }
+  let answer = await fetch(url);
   let movie = await answer.json();
   return movie;
 };
+
 
 // On exporte la fonction DataMovie.requestMovies
 export { DataMovie };

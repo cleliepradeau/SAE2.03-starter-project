@@ -105,14 +105,34 @@
       };
 
 
-      C.handlerToggleFavoris = async function (id, button) {
-        const select = document.querySelector("#profile-select");
-        const profileId = select ? select.value : null; 
-        console.log("ID du film :", id);
-        console.log("ID du profil sélectionné :", profileId);
-        await DataMovie.toggleFavoris(id, profileId);
-        C.getMovie();
-      };
+      C.handlerAddFavoris = async function (id, button) {
+      const profileSelect = document.querySelector("#profile-select");
+      const profileID = profileSelect ? profileSelect.value : null;
+
+      if (!profileID) {
+        alert("Veuillez d'abord sélectionner un profil.");
+        return;
+      }
+
+      const favoris = await DataMovie.requestFavoris(profileID);
+      const isAlreadyFavori = favoris.some(favori => favori.id === id);
+
+      if (isAlreadyFavori) {
+        alert("Le film est déjà présent dans les favoris !");
+        return;
+      }
+
+      if (button.classList.contains("favori-ajoute")) {
+        console.log("Déjà en favori, on ignore le clic.");
+        return;
+      }
+
+      await DataProfile.addFavori(profileID, id);
+      button.classList.add("favori-ajoute");
+      alert("Le film a été ajouté aux favoris !");
+    };
+
+
       
 
       // Vue (contient tout ce qui est relatif à l'affichage)
@@ -137,15 +157,30 @@
        * Elle sélectionne l'élément HTML avec l'ID "content" et y insère le contenu
        * formaté par le composant Movie.
        */
-       V.renderMovie = function (data) {
-        let content = document.querySelector("#content");
-        content.innerHTML = Movie.format(data);
-      };
+       V.renderMovie = async function (data, isLikesPage = false) {
+  const select = document.querySelector("#profile-select");
+  const profileId = select ? select.value : null;
+  let favorisIds = [];
+
+  if (profileId) {
+    const favoris = await DataMovie.requestFavoris(profileId);
+    favorisIds = favoris.map(f => f.id.toString());
+  }
+
+  let content = document.querySelector("#content");
+  content.innerHTML = Movie.format(data, isLikesPage, favorisIds);
+};
 
       V.renderDetail = function (data) {
         let content = document.querySelector("#detail");
         content.innerHTML = Moviedetail.format(data);
       };
+
+      V.renderMovie = function (data, isLikesPage = false) {
+  let content = document.querySelector("#content");
+  content.innerHTML = Movie.format(data, isLikesPage);
+};
+
 
       V.renderMovieCategorie = async function () {
         let container = document.querySelector(".categorie");

@@ -196,8 +196,17 @@ function addControllerFavoris() {
   $id_movie = $_REQUEST['id_movie'] ?? null;
 
   if ($id_profile === null || $id_movie === null) {
-    return false;
+      return "Erreur : profil ou film manquant.";
   }
 
-  return addFavoris($id_movie,$id_profile);
+  if (isFavorisExists($id_movie, $id_profile)) {
+      return "Ce film est déjà dans les favoris.";
+  }
+
+  $ok = addFavoris($id_movie, $id_profile);
+  if ($ok) {
+      return "Le film a été ajouté aux favoris.";
+  } else {
+      return "Erreur lors de l'ajout aux favoris.";
+  }
 }

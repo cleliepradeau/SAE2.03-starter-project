@@ -36,6 +36,16 @@ function getMovie($age = 0) {
     $movies = $stmt->fetchAll(PDO::FETCH_OBJ);
     return $movies;
 }
+function isFavorisExists($id_movie, $id_profile) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT COUNT(*) FROM Favoris WHERE id_movie = :id_movie AND id_profile = :id_profile";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
+    $stmt->bindParam(':id_profile', $id_profile, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchColumn() > 0;
+}
+
 
 function calculateAge($birthDate) {
     $birthDate = new DateTime($birthDate);
@@ -202,6 +212,10 @@ function getFavoris($id_profile){
 
 
 function addFavoris($id_movie, $id_profile) {
+    if (isFavorisExists($id_movie, $id_profile)) {
+        return false; // Film déjà en favoris
+    }
+
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     $sql = "INSERT INTO Favoris (id_movie, id_profile) VALUES (:id_movie, :id_profile)";
     $stmt = $cnx->prepare($sql);

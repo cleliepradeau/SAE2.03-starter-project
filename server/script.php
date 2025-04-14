@@ -91,6 +91,11 @@ if ( isset($_REQUEST['todo']) ){
       $data = addControllerFavoris();
       break;
 
+    
+    case 'deleteFavoris':
+      $data = deleteControllerFavoris();
+      break;
+
 
 
     default: // il y a un paramètre todo mais sa valeur n'est pas reconnue/supportée

@@ -60,25 +60,30 @@
 
 
 
-/* Ajout du style pour le bouton favori avec BEM */
+/* Ajout du style pour le bouton favori avec BEM
 .card__fav-btn {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  background: red;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
   border: none;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
-.card__fav-btn-icon {
-  width: 24px;
-  height: 24px;
+.card__favsvg {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.7);
+
+} */
+
+/* .card__fav-btn-icon {
+  width: 1.5rem;
+  height: 1.5rem;
   fill: none;
-  stroke: #ccc;
-  /* Cœur par défaut en gris */
+
+  /* Cœur par défaut en gris 
   transition: stroke 0.2s ease, transform 0.2s ease;
-}
+} */
 
 /* État quand le film est ajouté aux favoris */
 .card__fav-btn--liked .card__fav-btn-icon {
@@ -88,18 +93,29 @@
   /* Agrandissement du cœur lorsqu'il est aimé */
 }
 
-
-
+svg {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  /* box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.7); */
+  width: 2rem;
+  height: 2rem;
+  transition: stroke 0.2s ease, transform 0.2s ease;
+}
 
 /* Styles pour les écrans plus larges (tablettes et desktops) */
-@media (min-width: 768px) {
+@media (min-width: 48rem) {
   .cards {
     grid-template-columns: repeat(4, 1fr);
     /* 4 colonnes pour les tablettes */
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 64rem) {
   .cards {
     grid-template-columns: repeat(6, 1fr);
     /* 6 colonnes pour les écrans de bureau */

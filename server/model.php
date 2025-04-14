@@ -58,11 +58,6 @@ function readProfile() {
     return $profiles;
 }
 
-
-
-
-
-//test
 function addMovie($titre, $realisateur, $annee, $duree, $description, $categorie, $image, $url, $restriction) {
     // Connexion à la base de données
     
@@ -189,4 +184,28 @@ function getAllCategories() {
     $stmt->execute();
     $res = $stmt->fetchAll(PDO::FETCH_OBJ);
     return $res;
+}
+
+function getFavoris($id_profile){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "
+        SELECT m.*
+        FROM Favoris f
+        JOIN Movie m ON f.id_movie = m.id
+        WHERE f.id_profile = :id_profile
+    ";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_profile', $id_profile, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+
+function addFavoris($id_movie, $id_profile) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "INSERT INTO Favoris (id_movie, id_profile) VALUES (:id_movie, :id_profile)";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
+    $stmt->bindParam(':id_profile', $id_profile, PDO::PARAM_INT);
+    return $stmt->execute();
 }

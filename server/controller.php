@@ -180,3 +180,24 @@ function readControllerMovieCategorie(){
   return getMoviecategorie($categorie, $age);
 }
 
+function readControllerFavoris() {
+  $id_profile = $_REQUEST['id_profile'] ?? null;
+
+  if ($id_profile === null) {
+    return false;
+  }
+
+  return getFavoris($id_profile);
+}
+
+
+function addControllerFavoris() {
+  $id_profile = $_REQUEST['id_profile'] ?? null;
+  $id_movie = $_REQUEST['id_movie'] ?? null;
+
+  if ($id_profile === null || $id_movie === null) {
+    return false;
+  }
+
+  return addFavoris($id_movie,$id_profile);
+}

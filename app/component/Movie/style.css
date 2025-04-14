@@ -60,6 +60,36 @@
 
 
 
+/* Ajout du style pour le bouton favori avec BEM */
+.card__fav-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: red;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.card__fav-btn-icon {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: #ccc;
+  /* Cœur par défaut en gris */
+  transition: stroke 0.2s ease, transform 0.2s ease;
+}
+
+/* État quand le film est ajouté aux favoris */
+.card__fav-btn--liked .card__fav-btn-icon {
+  stroke: red;
+  /* Cœur rouge quand favori */
+  transform: scale(1.2);
+  /* Agrandissement du cœur lorsqu'il est aimé */
+}
+
+
+
 
 /* Styles pour les écrans plus larges (tablettes et desktops) */
 @media (min-width: 768px) {

@@ -28,13 +28,10 @@
       // Une fois l'application terminée, on pourrait remettre let C.
       window.C = {};
 
-      C.handlerAbout = function () {
-        C.getMovie();
-      };
 
       C.start = async function () {
       let profiles = await DataProfile.read();
-      V.renderNavBar("C.handlerAbout()", "C.handlerProfile()", profiles);
+      V.renderNavBar("C.handlerAbout()", "C.handlerProfile()", profiles, "C.handlerFavoris()");
       console.log("C.start");
       V.renderMovieCategorie();
       C.getMovie();
@@ -62,6 +59,10 @@
       }
 
       V.renderMovie(data);
+      };
+
+      C.handlerAbout = function () {
+        C.getMovie();
       };
 
 
@@ -95,6 +96,25 @@
       V.renderMovie(data);
     };
 
+
+      C.handlerFavoris = async function () {
+        const profileId = document.querySelector("#profile-select").value;
+        console.log("ID du profil sélectionné :", profileId);
+        const data = await DataMovie.requestFavoris(profileId);
+        V.renderMovie(data);
+      };
+
+
+      C.handlerToggleFavoris = async function (id, button) {
+        const select = document.querySelector("#profile-select");
+        const profileId = select ? select.value : null; 
+        console.log("ID du film :", id);
+        console.log("ID du profil sélectionné :", profileId);
+        await DataMovie.toggleFavoris(id, profileId);
+        C.getMovie();
+      };
+      
+
       // Vue (contient tout ce qui est relatif à l'affichage)
       window.V = {};
 
@@ -105,9 +125,9 @@
        * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
        * formaté par le composant NavBar.
        */
-       V.renderNavBar = function (hAbout, hProfile, profiles) {
+       V.renderNavBar = function (hAbout, hProfile, profiles, hFavoris) {
       let header = document.querySelector("#header");
-      header.innerHTML = NavBar.format(hAbout, hProfile, profiles);
+      header.innerHTML = NavBar.format(hAbout, hProfile, profiles, hFavoris);
       };
 
        /**

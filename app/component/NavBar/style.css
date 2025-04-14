@@ -1,5 +1,6 @@
 .navbar {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 3rem;
@@ -22,7 +23,7 @@
 
   .navbar__item:hover {
     --_offset: 0.5rem;
-    color: var(--color-accent, #ffcc00);
+    color: var(--color-accent, #585858);
   }
 }
 

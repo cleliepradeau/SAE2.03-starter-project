@@ -3,10 +3,11 @@ let template = await templateFile.text();
 
 let NavBar = {};
 
-NavBar.format = function (hAbout, hProfile, profiles) {
+NavBar.format = function (hAbout, hProfile, profiles, hFavoris) {
   let html = template;
   html = html.replace("{{hAbout}}", hAbout);
   html = html.replace("{{handler}}", hProfile);
+  html = html.replace("{{hFavoris}}", hFavoris);
 
   let profile = "";
   for (let i = 0; i < profiles.length; i++) {

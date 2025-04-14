@@ -43,6 +43,29 @@ DataMovie.requestMoviecategorie = async function (categorie, profileId) {
   return movie;
 };
 
+DataMovie.requestFavoris = async function (profileId) {
+  let url = HOST_URL + "/server/script.php?todo=getFavoris&id_profile=" + profileId;
+  let answer = await fetch(url);
+  let favoris = await answer.json();
+  return favoris;
+};
+
+DataMovie.addFavori = async function (movieId, profileId) {
+  let url = HOST_URL + "/server/script.php?todo=addFavori";
+  let formData = new FormData();
+  formData.append("id_movie", movieId);
+  formData.append("id_profile", profileId);
+
+  let response = await fetch(url, {
+    method: "POST",
+    body: formData,
+  });
+
+  let result = await response.json();
+  return result;
+};
+
+
 
 // On exporte la fonction DataMovie.requestMovies
 export { DataMovie };

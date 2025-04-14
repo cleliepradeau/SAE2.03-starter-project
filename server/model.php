@@ -223,3 +223,13 @@ function addFavoris($id_movie, $id_profile) {
     $stmt->bindParam(':id_profile', $id_profile, PDO::PARAM_INT);
     return $stmt->execute();
 }
+
+
+function deleteFavoris($id_movie, $id_profile) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "DELETE FROM Favoris WHERE id_movie = :id_movie AND id_profile = :id_profile";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_movie', $id_movie, PDO::PARAM_INT);
+    $stmt->bindParam(':id_profile', $id_profile, PDO::PARAM_INT);
+    return $stmt->execute();
+}

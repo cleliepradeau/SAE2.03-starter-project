@@ -210,3 +210,20 @@ function addControllerFavoris() {
       return "Erreur lors de l'ajout aux favoris.";
   }
 }
+
+
+function deleteControllerFavoris() {
+  $id_movie = $_REQUEST['id_movie'] ?? null;
+  $id_profile = $_REQUEST['id_profile'] ?? null;
+
+  if ($id_profile === null || $id_movie === null) {
+      return "Erreur : profil ou film manquant.";
+  }
+
+  $ok = deleteFavoris($id_movie, $id_profile);
+  if ($ok) {
+      return "Le film a été supprimé des favoris.";
+  } else {
+      return "Erreur lors de la suppression des favoris.";
+  }
+}

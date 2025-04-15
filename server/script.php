@@ -91,12 +91,17 @@ if ( isset($_REQUEST['todo']) ){
       $data = addControllerFavoris();
       break;
 
-    
     case 'deleteFavoris':
       $data = deleteControllerFavoris();
       break;
 
+    case 'getMovieMiseEnAvant':
+      $data = readControllerMovieMiseEnAvant();
+      break;
 
+    case 'getBarRecherche':
+      $data = readBarRechercheController();
+      break;
 
     default: // il y a un paramètre todo mais sa valeur n'est pas reconnue/supportée
       echo json_encode('[error] Unknown todo value');

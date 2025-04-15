@@ -227,3 +227,15 @@ function deleteControllerFavoris() {
       return "Erreur lors de la suppression des favoris.";
   }
 }
+
+function readControllerMovieMiseEnAvant(){
+  return getMovieMiseEnAvant();
+}
+
+
+function readBarRechercheController(){
+    $titre = $_REQUEST['titre'] ?? null;
+    if (empty($titre))
+      return false;
+    return getBarRecherche($titre);
+  }

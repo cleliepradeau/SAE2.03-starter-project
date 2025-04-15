@@ -233,3 +233,27 @@ function deleteFavoris($id_movie, $id_profile) {
     $stmt->bindParam(':id_profile', $id_profile, PDO::PARAM_INT);
     return $stmt->execute();
 }
+
+function getMovieMiseEnAvant() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT id, name, image, description
+            FROM Movie 
+            WHERE miseenavant = 1";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+function getBarRecherche($valeur)    {
+    $cnx = new PDO('mysql:host=' . HOST . ';dbname=' . DBNAME, DBLOGIN, DBPWD);
+    $sql = 'SELECT Movie.id, Movie.name, Movie.image, Movie.year, Movie.min_age, Movie.description, Movie.miseenavant, Category.name AS category_name
+            FROM Movie
+            INNER JOIN Category ON Movie.id_category = Category.id
+            WHERE Movie.name LIKE :titre OR Category.name LIKE :titre OR year LIKE :titre';
+
+    $stmt = $cnx->prepare($sql);
+    $recherche = '%' . $valeur . '%';
+    $stmt->bindParam(':titre', $recherche);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}

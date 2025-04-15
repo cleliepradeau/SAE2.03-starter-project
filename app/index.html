@@ -1,49 +1,58 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <title>SAE2.03 APP</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/base.css" />
-  </head>
 
-  <body>
-    <header id="header"></header>
+<head>
+  <title>SAE2.03 APP</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/base.css" />
+</head>
 
-    <section class="detail" id="detail"></section>
-    <section class="categorie" id="categorie"></section>
-    <section class="cards" id="content"></section>
+<body>
+  <header id="header"></header>
 
-
-    <script type="module">
-      import { NavBar } from "./component/NavBar/script.js";
-      import { Movie } from "./component/Movie/script.js";
-      import { Moviedetail } from "./component/MovieDetail/script.js";
-      import { MovieCategory } from "./component/MovieCategory/script.js";
-
-      import { DataMovie } from "./data/dataMovie.js";
-      import { DataProfile } from "./data/dataProfile.js";
-      // Controleur
-      // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
-      // Une fois l'application terminée, on pourrait remettre let C.
-      window.C = {};
+  <section class="mea" id="mea"></section>
+  <section class="detail" id="detail"></section>
+  <section class="categorie" id="categorie"></section>
+  <section class="cards" id="content"></section>
 
 
-      C.start = async function () {
+
+  <script type="module">
+    import { NavBar } from "./component/NavBar/script.js";
+    import { BarDeRecherche } from "./component/BarDeRecherche/script.js";
+    import { Movie } from "./component/Movie/script.js";
+    import { Moviedetail } from "./component/MovieDetail/script.js";
+    import { MovieCategory } from "./component/MovieCategory/script.js";
+    import { MovieMiseenavant } from "./component/MovieMiseenavant/script.js";
+
+    import { DataMovie } from "./data/dataMovie.js";
+    import { DataProfile } from "./data/dataProfile.js";
+    // Controleur
+    // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
+    // Une fois l'application terminée, on pourrait remettre let C.
+    window.C = {};
+
+
+    C.start = async function () {
       let profiles = await DataProfile.read();
-      V.renderNavBar("C.handlerAbout()", "C.handlerProfile()", profiles, "C.handlerFavoris()");
+      V.renderNavBar("C.handlerAbout()", "C.handlerProfile()", profiles, "C.handlerFavoris()", "C.handlerBarDeRecherche(this.value)");
       console.log("C.start");
       V.renderMovieCategorie();
       C.getMovie();
-      };
+      C.getMovieMiseEnAvant();
 
-      /* C.getMovie
-      La fonction affiche sur la page la collection de films par défaut
-      */
-      C.getMovie = async function () {
+      let barreRechercheHTML = BarDeRecherche.format(); // ← doit retourner l'HTML de la barre
+      V.renderNavBar("C.handlerAbout()", "C.handlerProfile()", profiles, "C.handlerFavoris()", barreRechercheHTML);
+    };
+
+    /* C.getMovie
+    La fonction affiche sur la page la collection de films par défaut
+    */
+    C.getMovie = async function () {
       const section = document.querySelector("section.cards");
       section.classList.remove("favoris-page");
-      
+
       let detail = document.querySelector("#detail");
       detail.innerHTML = "";
 
@@ -54,36 +63,42 @@
       let data;
 
       if (profileId) {
-      // Récupère uniquement les films adaptés à ce profil
+        // Récupère uniquement les films adaptés à ce profil
         data = await DataMovie.requestMovies(profileId);
       } else {
-      // Aucun profil sélectionné → tout afficher
+        // Aucun profil sélectionné → tout afficher
         data = await DataMovie.requestMovies();
       }
 
       V.renderMovie(data);
-      };
+    };
 
-      C.handlerAbout = function () {
-        C.getMovie();
-      };
+    C.getMovieMiseEnAvant = async function () {
+      let data = await DataMovie.requestMiseenavant();
+      let mise_en_avant = document.querySelector("#mea");
+      mise_en_avant.innerHTML = await MovieMiseenavant.format(data);  // Assure-toi d'attendre le résultat de format
+    };
+
+    C.handlerAbout = function () {
+      C.getMovie();
+    };
 
 
-      C.handlerDetail = async function (id) {
-        let data = await DataMovie.requestMovieDetails(id); // On récupère les données par défaut et on attend avec await
-        V.renderDetail(data); // Affiche les données
-      };
+    C.handlerDetail = async function (id) {
+      let data = await DataMovie.requestMovieDetails(id); // On récupère les données par défaut et on attend avec await
+      V.renderDetail(data); // Affiche les données
+    };
 
-      C.handlerCategorie = async function (categorie) {
+    C.handlerCategorie = async function (categorie) {
       console.log("Catégorie sélectionnée :", categorie);
       const select = document.querySelector("#profile-select");
       const profileId = select ? select.value : null; // récupère l'ID du profil sélectionné (s'il y en a un)
       let data = await DataMovie.requestMoviecategorie(categorie, profileId);
       V.renderMovie(data);
-      };
+    };
 
 
-      C.handlerProfile = async function () {
+    C.handlerProfile = async function () {
       const select = document.querySelector("#profile-select");
       const selectedOption = select.selectedOptions[0]; // Récupère la première option sélectionnée
       console.log(selectedOption);
@@ -101,17 +116,17 @@
 
 
     C.handlerFavoris = async function () {
-  const profileId = document.querySelector("#profile-select").value;
-  const data = await DataMovie.requestFavoris(profileId);
+      const profileId = document.querySelector("#profile-select").value;
+      const data = await DataMovie.requestFavoris(profileId);
 
-  const section = document.querySelector("section.cards");
-  section.classList.add("favoris-page"); // ← active le mode favoris
+      const section = document.querySelector("section.cards");
+      section.classList.add("favoris-page"); // ← active le mode favoris
 
-  V.renderMovie(data, true);
-};
+      V.renderMovie(data, true);
+    };
 
 
-      C.handlerAddFavoris = async function (id, button) {
+    C.handlerAddFavoris = async function (id, button) {
       const profileSelect = document.querySelector("#profile-select");
       const profileID = profileSelect ? profileSelect.value : null;
 
@@ -144,53 +159,60 @@
     };
 
     C.handlerDeleteFavoris = async function (id, button) {
-  const isLikesPage = document.querySelector("section.cards").classList.contains("favoris-page");
+      const isLikesPage = document.querySelector("section.cards").classList.contains("favoris-page");
 
-  if (!isLikesPage) {
-    console.log("Suppression des favoris désactivée en dehors de la page Favoris.");
-    return; // Empêche toute suppression
-  }
+      if (!isLikesPage) {
+        console.log("Suppression des favoris désactivée en dehors de la page Favoris.");
+        return; // Empêche toute suppression
+      }
 
-  const profileSelect = document.querySelector("#profile-select");
-  const profileID = profileSelect ? profileSelect.value : null;
+      const profileSelect = document.querySelector("#profile-select");
+      const profileID = profileSelect ? profileSelect.value : null;
 
-  if (!profileID) {
-    alert("Veuillez d'abord sélectionner un profil.");
-    return;
-  }
+      if (!profileID) {
+        alert("Veuillez d'abord sélectionner un profil.");
+        return;
+      }
 
-  await DataMovie.deleteFavoris(id, profileID);
+      await DataMovie.deleteFavoris(id, profileID);
 
-  // Supprime l'élément du DOM
-  button.closest('.card').remove();
-};
+      // Supprime l'élément du DOM
+      button.closest('.card').remove();
+    };
+
+    C.handlerBarDeRecherche = async function (valeur) {
+      if (!valeur || valeur.trim().length === 0) {
+        return C.getMovie();
+      }
+
+      const results = await DataMovie.requestBarRecherche(valeur);
+      V.renderMovie(results);
+    };
 
 
-      
+    // Vue (contient tout ce qui est relatif à l'affichage)
+    window.V = {};
 
-      // Vue (contient tout ce qui est relatif à l'affichage)
-      window.V = {};
-
-      /**
-       * V.renderNavBar
-       *
-       * Cette fonction est responsable de l'affichage de la barre de navigation (NavBar).
-       * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
-       * formaté par le composant NavBar.
-       */
-       V.renderNavBar = function (hAbout, hProfile, profiles, hFavoris) {
+    /**
+     * V.renderNavBar
+     *
+     * Cette fonction est responsable de l'affichage de la barre de navigation (NavBar).
+     * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
+     * formaté par le composant NavBar.
+     */
+    V.renderNavBar = function (hAbout, hProfile, profiles, hFavoris, barrecherche) {
       let header = document.querySelector("#header");
-      header.innerHTML = NavBar.format(hAbout, hProfile, profiles, hFavoris);
-      };
+      header.innerHTML = NavBar.format(hAbout, hProfile, profiles, hFavoris, barrecherche);
+    };
 
-       /**
-       * V.renderMovie
-       *
-       * Cette fonction est responsable de l'affichage de la liste des films.
-       * Elle sélectionne l'élément HTML avec l'ID "content" et y insère le contenu
-       * formaté par le composant Movie.
-       */
-       V.renderMovie = async function (data, isLikesPage = false) {
+    /**
+    * V.renderMovie
+    *
+    * Cette fonction est responsable de l'affichage de la liste des films.
+    * Elle sélectionne l'élément HTML avec l'ID "content" et y insère le contenu
+    * formaté par le composant Movie.
+    */
+    V.renderMovie = async function (data, isLikesPage = false) {
       const select = document.querySelector("#profile-select");
       const profileId = select ? select.value : null;
       let favorisIds = [];
@@ -204,10 +226,10 @@
       content.innerHTML = Movie.format(data, isLikesPage, favorisIds);
     };
 
-      V.renderDetail = function (data) {
-        let content = document.querySelector("#detail");
-        content.innerHTML = Moviedetail.format(data);
-      };
+    V.renderDetail = function (data) {
+      let content = document.querySelector("#detail");
+      content.innerHTML = Moviedetail.format(data);
+    };
 
     //   V.renderMovie = function (data, isLikesPage = false) {
     //   let content = document.querySelector("#content");
@@ -215,13 +237,26 @@
     // };
 
 
-      V.renderMovieCategorie = async function () {
-        let container = document.querySelector(".categorie");
-        let categories = await DataMovie.requestCategories();
-        container.innerHTML = MovieCategory.format(categories);
-      };
-      C.start(); // Démarre l'application
-    </script>
-  </body>
+    V.renderMovieCategorie = async function () {
+      let container = document.querySelector(".categorie");
+      let categories = await DataMovie.requestCategories();
+      container.innerHTML = MovieCategory.format(categories);
+    };
+
+    V.renderMovieMiseenavant = function (data) {
+      let mise_en_avant = document.querySelector("#mea");
+      mise_en_avant.innerHTML = MovieMiseenavant.format(data);
+    };
+
+    V.renderBarDeRecherche = function (value) {
+      let container = document.querySelector(".BarDeRecherche"); // ou autre classe contenant ta barre
+      if (!container) return;
+      container.innerHTML = BarDeRecherche.format(value);
+    };
+
+    C.start(); // Démarre l'application
+  </script>
+</body>
+
 </html>
 <script type="module"></script>

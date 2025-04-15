@@ -3,7 +3,7 @@ let template = await templateFile.text();
 
 let NavBar = {};
 
-NavBar.format = function (hAbout, hProfile, profiles, hFavoris) {
+NavBar.format = function (hAbout, hProfile, profiles, hFavoris, barrecherche) {
   let html = template;
   html = html.replace("{{hAbout}}", hAbout);
   html = html.replace("{{handler}}", hProfile);
@@ -19,6 +19,7 @@ NavBar.format = function (hAbout, hProfile, profiles, hFavoris) {
   let image = profiles[0]?.image || "";
   html = html.replace("{{profile}}", profile);
   html = html.replace("{{image}}", image);
+  html = html.replace("{{barrecherche}}", barrecherche);
 
   return html;
 };

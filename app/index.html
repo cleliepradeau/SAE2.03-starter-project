@@ -41,6 +41,9 @@
       La fonction affiche sur la page la collection de films par défaut
       */
       C.getMovie = async function () {
+      const section = document.querySelector("section.cards");
+      section.classList.remove("favoris-page");
+      
       let detail = document.querySelector("#detail");
       detail.innerHTML = "";
 
@@ -97,12 +100,15 @@
     };
 
 
-      C.handlerFavoris = async function () {
-        const profileId = document.querySelector("#profile-select").value;
-        console.log("ID du profil sélectionné :", profileId);
-        const data = await DataMovie.requestFavoris(profileId);
-        V.renderMovie(data);
-      };
+    C.handlerFavoris = async function () {
+  const profileId = document.querySelector("#profile-select").value;
+  const data = await DataMovie.requestFavoris(profileId);
+
+  const section = document.querySelector("section.cards");
+  section.classList.add("favoris-page"); // ← active le mode favoris
+
+  V.renderMovie(data, true);
+};
 
 
       C.handlerAddFavoris = async function (id, button) {
@@ -129,8 +135,35 @@
 
       await DataProfile.addFavori(profileID, id);
       button.classList.add("favori-ajoute");
+
+      const svg = button.querySelector("svg");
+      svg.classList.add("heart-liked");
+
       alert("Le film a été ajouté aux favoris !");
+
     };
+
+    C.handlerDeleteFavoris = async function (id, button) {
+  const isLikesPage = document.querySelector("section.cards").classList.contains("favoris-page");
+
+  if (!isLikesPage) {
+    console.log("Suppression des favoris désactivée en dehors de la page Favoris.");
+    return; // Empêche toute suppression
+  }
+
+  const profileSelect = document.querySelector("#profile-select");
+  const profileID = profileSelect ? profileSelect.value : null;
+
+  if (!profileID) {
+    alert("Veuillez d'abord sélectionner un profil.");
+    return;
+  }
+
+  await DataMovie.deleteFavoris(id, profileID);
+
+  // Supprime l'élément du DOM
+  button.closest('.card').remove();
+};
 
 
       
@@ -158,28 +191,28 @@
        * formaté par le composant Movie.
        */
        V.renderMovie = async function (data, isLikesPage = false) {
-  const select = document.querySelector("#profile-select");
-  const profileId = select ? select.value : null;
-  let favorisIds = [];
+      const select = document.querySelector("#profile-select");
+      const profileId = select ? select.value : null;
+      let favorisIds = [];
 
-  if (profileId) {
-    const favoris = await DataMovie.requestFavoris(profileId);
-    favorisIds = favoris.map(f => f.id.toString());
-  }
+      if (profileId) {
+        const favoris = await DataMovie.requestFavoris(profileId);
+        favorisIds = favoris.map(f => f.id.toString());
+      }
 
-  let content = document.querySelector("#content");
-  content.innerHTML = Movie.format(data, isLikesPage, favorisIds);
-};
+      let content = document.querySelector("#content");
+      content.innerHTML = Movie.format(data, isLikesPage, favorisIds);
+    };
 
       V.renderDetail = function (data) {
         let content = document.querySelector("#detail");
         content.innerHTML = Moviedetail.format(data);
       };
 
-      V.renderMovie = function (data, isLikesPage = false) {
-  let content = document.querySelector("#content");
-  content.innerHTML = Movie.format(data, isLikesPage);
-};
+    //   V.renderMovie = function (data, isLikesPage = false) {
+    //   let content = document.querySelector("#content");
+    //   content.innerHTML = Movie.format(data, isLikesPage);
+    // };
 
 
       V.renderMovieCategorie = async function () {

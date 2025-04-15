@@ -76,11 +76,11 @@ function addController(){
     if (empty($titre) || empty($realisateur) || empty($annee) || empty($duree) || empty($description) || empty($categorie) || empty($image) || empty($url) || empty($restriction)) {
         return "Tous les champs sont obligatoires.";
     }
-    // Mise à jour du menu à l'aide de la fonction updateMenu décrite dans model.php
+    
     $ok = addMovie($titre, $realisateur, $annee, $duree, $description, $categorie, $image, $url, $restriction);
-    // $ok est le nombre de ligne affecté par l'opération de mise à jour dans la BDD (voir model.php)
+    
     if ($ok!=0){
-      return "Le film $titre a été mis à jour";
+      return "Le film $titre a été ajouté";
     }
     else{
       return "Aucun film n'a été ajouté";

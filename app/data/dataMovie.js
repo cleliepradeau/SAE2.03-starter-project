@@ -65,6 +65,23 @@ DataMovie.addFavori = async function (movieId, profileId) {
   return result;
 };
 
+DataMovie.deleteFavoris = async function (movieId, profileId) {
+  let url = HOST_URL + "/server/script.php?todo=deleteFavoris";
+  let formData = new FormData();
+  formData.append("id_movie", movieId);
+  formData.append("id_profile", profileId);
+
+  // Envoi de la requête pour supprimer le film des favoris
+  let response = await fetch(url, {
+    method: "POST",
+    body: formData,
+  });
+
+  // Attente du résultat et renvoi du résultat sous forme de JSON
+  let result = await response.json();
+  return result;
+};
+
 
 
 // On exporte la fonction DataMovie.requestMovies

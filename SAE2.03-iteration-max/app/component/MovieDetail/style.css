@@ -2,12 +2,13 @@
   background-color: var(--color-bg);
   display: flex;
   flex-direction: column;
+
 }
 
 .card__details__top {
   display: flex;
   flex-direction: row;
-  padding: 2rem;
+  margin: 2rem 8rem
 }
 
 .card__details__image {

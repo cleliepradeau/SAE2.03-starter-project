@@ -1,0 +1,108 @@
+.mea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.mea__titre {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.mea__cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  width: 100%;
+  max-width: 60rem;
+}
+
+.mea__card {
+  position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.mea__card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
+}
+
+.mea__img {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+}
+
+.mea__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mea__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+
+  color: #fff;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: auto;
+}
+
+.mea__card:hover .mea__overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 1), transparent);
+}
+
+
+.mea__name {
+  opacity: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+.mea__card:hover .mea__name {
+  opacity: 1;
+  /* Afficher le nom au survol */
+}
+
+.mea__desc {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+  height: auto;
+  /* Permet à la description de s'ajuster */
+  overflow: hidden;
+}
+
+.mea__card:hover .mea__desc {
+  opacity: 1;
+  /* Afficher la description au survol */
+}
+
+
+
+@media (min-width: 48rem) {
+  .mea__cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

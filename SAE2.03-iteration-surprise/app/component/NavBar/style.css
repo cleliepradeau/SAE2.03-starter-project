@@ -1,0 +1,74 @@
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  color: var(--color-fg);
+  background-color: var(--color-black);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  .navbar__list {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .navbar__item {
+    --_offset: 0.2rem;
+    padding: 0.5rem 1rem;
+    text-decoration: underline;
+    text-decoration-thickness: 0.1rem;
+    text-underline-offset: var(--_offset);
+    cursor: pointer;
+    transition: text-underline-offset 0.2s ease-in-out;
+    font-size: 1.1rem;
+    color: var(--color-fg);
+  }
+
+  .navbar__item:hover {
+    --_offset: 0.5rem;
+    color: var(--color-accent, #585858);
+  }
+}
+
+.navbar__profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar__label {
+  margin-right: 0.5rem;
+  color: var(--color-fg);
+  font-weight: 600;
+}
+
+.navbar__select {
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #222;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.navbar__select:hover {
+  background-color: #333;
+}
+
+.navbar__image {
+  width: 40px;
+  height: 40px;
+  border-radius: 10%;
+  object-fit: cover;
+  border: 1px solid var(--color-fg);
+  transition: transform 0.2s ease;
+}
+
+.navbar__image:hover {
+  transform: scale(1.1);
+}

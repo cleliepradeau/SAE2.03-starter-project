@@ -1,0 +1,31 @@
+.BarDeRecherche {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background-color: var(--color-black);
+}
+
+.BarDeRecherche__input {
+  width: 40rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: var(--color-white);
+  border: 2px solid var(--color-gray);
+  background-color: var(--color-gray-dark);
+  border-radius: 2rem;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+.BarDeRecherche__input::placeholder {
+  color: var(--color-gray);
+  font-style: italic;
+}
+
+.BarDeRecherche__input:focus {
+  border-color: var(--color-gray);
+  box-shadow: 0 0 0 3px rgba(162, 162, 162, 0.2);
+  transform: scale(1.02);
+}

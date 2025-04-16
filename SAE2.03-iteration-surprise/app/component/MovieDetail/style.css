@@ -1,0 +1,29 @@
+.card__details {
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+
+}
+
+.card__details__top {
+  display: flex;
+  flex-direction: row;
+  margin: 2rem 8rem
+}
+
+.card__details__image {
+  width: 30rem;
+  max-height: 60%;
+  border-radius: 0.5rem;
+}
+
+.card__details__content {
+  font-family: var(--ff-sans);
+  padding-left: 2rem;
+  color: var(--color-fg);
+}
+
+.card__details__trailer {
+  width: 60%;
+  height: 20rem;
+}

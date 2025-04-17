@@ -20,22 +20,34 @@ define("DBPWD", "pradeau49");
 
 
 function getMovie($age = 0) {
-    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    
-    // Filtrer les films en fonction de l'âge
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+
     if ($age > 0) {
-        $sql = "SELECT id, name, image FROM Movie WHERE min_age <= :age";
+        $sql = "SELECT 
+                    Movie.id, 
+                    Movie.name, 
+                    Movie.image, 
+                    Category.name AS category
+                FROM Movie
+                JOIN Category ON Movie.id_category = Category.id
+                WHERE Movie.min_age <= :age";
         $stmt = $cnx->prepare($sql);
         $stmt->bindParam(':age', $age, PDO::PARAM_INT);
     } else {
-        $sql = "SELECT id, name, image FROM Movie";
+        $sql = "SELECT 
+                    Movie.id, 
+                    Movie.name, 
+                    Movie.image, 
+                    Category.name AS category
+                FROM Movie
+                JOIN Category ON Movie.id_category = Category.id";
         $stmt = $cnx->prepare($sql);
     }
 
     $stmt->execute();
-    $movies = $stmt->fetchAll(PDO::FETCH_OBJ);
-    return $movies;
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
+
 function isFavorisExists($id_movie, $id_profile) {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     $sql = "SELECT COUNT(*) FROM Favoris WHERE id_movie = :id_movie AND id_profile = :id_profile";
@@ -235,14 +247,24 @@ function deleteFavoris($id_movie, $id_profile) {
 }
 
 function getMovieMiseEnAvant() {
-    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT id, name, image, description
-            FROM Movie 
-            WHERE miseenavant = 1";
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    
+    $sql = "SELECT 
+                Movie.id, 
+                Movie.name, 
+                Movie.image, 
+                Movie.description,
+                Category.name AS category
+            FROM Movie
+            JOIN Category ON Movie.id_category = Category.id
+            WHERE Movie.miseenavant = 1";
+
     $stmt = $cnx->prepare($sql);
     $stmt->execute();
+    
     return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
+
 
 function getBarRecherche($valeur)    {
     $cnx = new PDO('mysql:host=' . HOST . ';dbname=' . DBNAME, DBLOGIN, DBPWD);

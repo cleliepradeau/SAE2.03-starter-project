@@ -9,12 +9,18 @@
 </head>
 
 <body>
-  <header id="header"></header>
-  <section class="categorie" id="categorie"></section>
-  <section class="mea" id="mea"></section>
-  <section class="detail" id="detail"></section>
 
-  <section class="cards" id="content"></section>
+  <header id="header"></header>
+  <!-- <section class="hero"></section> -->
+  <section class="categorie" id="categorie"></section>
+
+  <section class="detail" id="detail"></section>
+  <section class="mea" id="mea"></section>
+
+
+  <h3 class="cards__title">Tous les films</h3>
+  <section class="cards" id="content">
+  </section>
 
 
 
@@ -25,6 +31,8 @@
     import { Moviedetail } from "./component/MovieDetail/script.js";
     import { MovieCategory } from "./component/MovieCategory/script.js";
     import { MovieMiseenavant } from "./component/MovieMiseenavant/script.js";
+    // import { Hero } from "./component/Hero/script.js";
+
 
     import { DataMovie } from "./data/dataMovie.js";
     import { DataProfile } from "./data/dataProfile.js";
@@ -42,8 +50,10 @@
       C.getMovie();
       C.getMovieMiseEnAvant();
 
+
       let barreRechercheHTML = BarDeRecherche.format(); // ← doit retourner l'HTML de la barre
       V.renderNavBar("C.handlerAbout()", "C.handlerProfile()", profiles, "C.handlerFavoris()", barreRechercheHTML);
+      // V.renderHero();
     };
 
     /* C.getMovie
@@ -226,10 +236,20 @@
       content.innerHTML = Movie.format(data, isLikesPage, favorisIds);
     };
 
-    V.renderDetail = function (data) {
+    V.renderDetail = async function (data) {
+      const select = document.querySelector("#profile-select");
+      const profileId = select ? select.value : null;
+      let favorisIds = [];
+
+      if (profileId) {
+        const favoris = await DataMovie.requestFavoris(profileId);
+        favorisIds = favoris.map(f => f.id.toString());
+      }
+
       let content = document.querySelector("#detail");
-      content.innerHTML = Moviedetail.format(data);
+      content.innerHTML = Moviedetail.format(data, { favorisIds });
     };
+
 
     //   V.renderMovie = function (data, isLikesPage = false) {
     //   let content = document.querySelector("#content");
@@ -245,8 +265,8 @@
 
       tags.forEach(tag => {
         tag.addEventListener("click", () => {
-          tags.forEach(t => t.classList.remove("active")); // supprime l'ancienne active
-          tag.classList.add("active"); // ajoute la nouvelle
+          tags.forEach(t => t.classList.remove("active"));
+          tag.classList.add("active");
 
           let profileId = document.querySelector("#profile-select")?.value;
           C.handlerCategorie(tag.dataset.name, profileId);
@@ -261,10 +281,15 @@
     };
 
     V.renderBarDeRecherche = function (value) {
-      let container = document.querySelector(".BarDeRecherche"); // ou autre classe contenant ta barre
+      let container = document.querySelector(".BarDeRecherche");
       if (!container) return;
       container.innerHTML = BarDeRecherche.format(value);
     };
+
+    // V.renderHero = function () {
+    //   let section = document.querySelector(".hero");
+    //   section.innerHTML = Hero.format();
+    // };
 
     C.start(); // Démarre l'application
   </script>

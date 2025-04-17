@@ -1,20 +1,42 @@
 <div class="card__details">
-  <div class="card__details__top">
-    <img src="https://mmi.unilim.fr/~pradeau49/SAE2.03-PRADEAU/SAE2.03-iteration-surprise/server/images/{{image}}"
-      alt="Affiche du film" class="card__details__image" />
-    <div class="card__details__content">
-      <h2 class="card__details__title">{{titre}}</h2>
-      <p class="card__details__desc">{{desc}}</p>
-      <p class="card__details__realisateur">Réalisateur : {{realisateur}}</p>
-      <p class="card__details__annee">Année : {{annee}}</p>
-      <p class="card__details__duree">Durée : {{duree}} minutes</p>
-      <p class="card__details__categorie">Catégorie : {{categorie}}</p>
-      <p class="card__details__age">Age minimum : {{age}} ans</p>
-      <iframe class="card__details__trailer" src="{{url}}" title="YouTube video player" frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
+
+  <img class="card__details__image"
+    src="https://mmi.unilim.fr/~pradeau49/SAE2.03-PRADEAU/SAE2.03-iteration-surprise/server/images/{{image}}"
+    alt="Affiche du film" />
+  <div class="card__details__content">
+    <h2 class="card__details__title">{{titre}}</h2>
+    <div class="card__details__buttons">
+      <button class="card__details__button card__details__button--reg"><svg class="icon-play"
+          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+          <path
+            d="M6 4.5C6 3.67 6.94 3.21 7.61 3.7L19.2 11.2C19.79 11.6 19.79 12.4 19.2 12.8L7.61 20.3C6.94 20.79 6 20.33 6 19.5V4.5Z"
+            fill="white" />
+        </svg>Regarder</button>
+      <button class="card__details__button card__details__button--fav {{favoriClass}}"
+        onclick="event.stopPropagation(); C.handlerAddFavoris({{id}}, this)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path
+            d="M12 8C12 8 12 8 11.24 7C10.36 5.84 9.06 5 7.5 5C5.01 5 3 7.01 3 9.5C3 10.43 3.28 11.29 3.76 12C4.57 13.21 12 21 12 21M12 8C12 8 12 8 12.76 7C13.64 5.84 14.94 5 16.5 5C18.99 5 21 7.01 21 9.5C21 10.43 20.72 11.29 20.24 12C19.43 13.21 12 21 12 21"
+            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>Ajouter aux favoris
+      </button>
     </div>
+    <p class="card__details__desc">{{desc}}</p>
+    <p class="card__details__realisateur">Réaliser par : {{realisateur}}</p>
+    <ul class="card__details__list">
+      <li class="card__details__annee">{{annee}}</li>
+      <li class="card__details__duree">{{duree}} minutes</li>
+      <li class="card__details__age">{{age}}+</li>
+    </ul>
+    <p class="card__details__categorie">{{categorie}}</p>
+  </div>
+
+  <div class="card__details__trailer__container">
+    <h2 class="card__details__trailer__title">Trailer</h2>
+    <p class="card__details__trailer__desc">À propos du film</p>
+    <iframe class="card__details__trailer" src="{{url}}" title="YouTube video player" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
   </div>
 
 </div>

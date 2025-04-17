@@ -13,6 +13,7 @@ Movie.format = function (movies, isLikesPage = false, favorisIds = []) {
     let movieHtml = template;
     movieHtml = movieHtml.replaceAll("{{id}}", movie.id);
     movieHtml = movieHtml.replace("{{titre}}", movie.name);
+    movieHtml = movieHtml.replace("{{category}}", movie.category);
     movieHtml = movieHtml.replace("{{image}}", movie.image);
 
     const isFavori = favorisIds.includes(movie.id.toString());

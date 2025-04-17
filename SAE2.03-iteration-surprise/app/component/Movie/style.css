@@ -1,61 +1,70 @@
 .cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.25rem;
-  padding: 1rem;
   justify-items: stretch;
-  /* Pour que les cards remplissent leur colonne */
+  max-width: 70rem;
+  margin: 0 auto;
 }
+
+.cards__title {
+  display: flex;
+  align-items: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-align: left;
+  margin: 0 auto 1rem;
+  padding-top: 2rem;
+  width: 70rem;
+  color: var(--color-title);
+}
+
+
 
 .card {
   position: relative;
   width: 100%;
   max-width: none;
-  /* Supprime la limite pour uniformiser la taille */
-  border-radius: 0.5rem;
   overflow: hidden;
-  height: 22rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
 }
 
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.7);
-}
 
 .card__image {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  position: relative;
+  border-radius: 0.2rem;
   object-fit: cover;
-  border-radius: 0.5rem;
   display: block;
 }
 
-.card__title {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  font-size: 1rem;
-  font-weight: 600;
-  color: white;
-  text-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.6);
-  padding: 1rem 1rem 0.5rem 1rem;
-  /* réduit le padding haut */
-  margin: 0;
-  background: linear-gradient(to top, rgb(0, 0, 0), rgba(44, 44, 44, 0));
-  box-sizing: border-box;
-  height: 40%;
-  /* augmente la zone */
+.card__content {
+  padding-top: 0.8rem;
   display: flex;
-  align-items: flex-start;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.3;
-  max-height: 4.5rem;
-  /* plus de place pour 2 lignes */
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.card__name {
+  font-size: 1.2rem;
+  font-weight: 650;
+  color: var(--color-title);
+  margin: 0;
+}
+
+.card__cat {
+  font-size: 0.95rem;
+  color: var(--color-gray);
+  margin: 0;
+}
+
+@media (min-width: 48rem) {
+  .cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .card__buttons {
@@ -110,16 +119,4 @@
 svg.heart-liked path {
   stroke: red;
   fill: red;
-}
-
-@media (min-width: 48rem) {
-  .cards {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (min-width: 64rem) {
-  .cards {
-    grid-template-columns: repeat(6, 1fr);
-  }
 }

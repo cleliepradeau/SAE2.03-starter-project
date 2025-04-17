@@ -1,15 +1,20 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
 
 :root {
   /* Primitive Tokens */
-  --color-black: hsl(0, 0%, 6%);
-  --color-white: hsl(0, 0%, 100%);
-  --color-gray-light: hsl(0, 0%, 80%);
-  --color-gray: hsl(0, 0%, 50%);
-  --color-gray-dark: hsl(0, 0%, 11%);
-  --ff-sans: "DM sans", sans-serif;
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-gray-light: #bfbfbf;
+  --color-gray: #6F6F6F;
+  --color-gray-dark: #393939;
+  --color-blue-dark: #041E42;
+  --color-bg-blue: #001830;
+  --color-red: #ED1C24;
+  --color-red-dark: #A40203;
+  --ff-sans: "Source Sans 3", sans-serif;
 
   /* Sementic Tokens */
-  --color-fg: var(--color-white);
-  --color-bg: var(--color-gray-dark);
+  --color-bg: var(--color-white);
+  --color-title: var(--color-blue-dark);
+  --color-desc: var(--color-gray);
 }

@@ -1,22 +1,28 @@
 <nav class="navbar font-sans">
   <ul class="navbar__list">
-    <li class="navbar__item" onclick="{{hAbout}}">Accueil</li>
+    <li class="navbar__item">
+      <img class="navbar__logo"
+        src="https://mmi.unilim.fr/~pradeau49/SAE2.03-PRADEAU/SAE2.03-iteration-surprise/server/images/logo.svg"
+        alt="Logo de l'application">
+    </li>
+    <li class="navbar__item" onclick="{{hAbout}}">Accueil
+
+    </li>
     <li class="navbar__item" onclick="{{hFavoris}}">Favoris</li>
   </ul>
-  {{barrecherche}}
-  <div class="navbar__profile">
+  <div class="navbar__search">
+    {{barrecherche}}
     <div class="navbar__profile">
+
       <label for="profile-select" class="navbar__label"></label>
       <select id="profile-select" class="navbar__select" onchange="{{handler}}">
         {{profile}}
       </select>
-  
-      <img
-        id="profile-image"
-        class="navbar__image"
-        src="https://mmi.unilim.fr/~pradeau49/SAE2.03-starter-project/server/images/{{image}}"
-        alt="Photo de profil"
-      />
+
+      <img id="profile-image" class="navbar__image"
+        src="https://mmi.unilim.fr/~pradeau49/SAE2.03-PRADEAU/SAE2.03-iteration-surprise/server/images/{{image}}"
+        alt="Photo de profil" />
+    </div>
   </div>
 
 </nav>

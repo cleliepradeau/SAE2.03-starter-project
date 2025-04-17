@@ -10,10 +10,10 @@
 
 <body>
   <header id="header"></header>
-
+  <section class="categorie" id="categorie"></section>
   <section class="mea" id="mea"></section>
   <section class="detail" id="detail"></section>
-  <section class="categorie" id="categorie"></section>
+
   <section class="cards" id="content"></section>
 
 
@@ -107,7 +107,7 @@
       const dob = selectedOption.getAttribute("data-dob");
       const imageFilename = selectedOption.getAttribute("data-img");
       const picture = document.querySelector("#profile-image");
-      const base = "https://mmi.unilim.fr/~pradeau49/SAE2.03-starter-project/server/images/";
+      const base = "https://mmi.unilim.fr/~pradeau49/SAE2.03-PRADEAU/SAE2.03-iteration-surprise/server/images/";
       picture.src = base + imageFilename;
       // Appel de films filtrés par ID de profil
       let data = await DataMovie.requestMovies(profileId); // Remplacer profileId
@@ -236,12 +236,24 @@
     //   content.innerHTML = Movie.format(data, isLikesPage);
     // };
 
-
     V.renderMovieCategorie = async function () {
       let container = document.querySelector(".categorie");
       let categories = await DataMovie.requestCategories();
       container.innerHTML = MovieCategory.format(categories);
+
+      let tags = container.querySelectorAll(".categorie__tag");
+
+      tags.forEach(tag => {
+        tag.addEventListener("click", () => {
+          tags.forEach(t => t.classList.remove("active")); // supprime l'ancienne active
+          tag.classList.add("active"); // ajoute la nouvelle
+
+          let profileId = document.querySelector("#profile-select")?.value;
+          C.handlerCategorie(tag.dataset.name, profileId);
+        });
+      });
     };
+
 
     V.renderMovieMiseenavant = function (data) {
       let mise_en_avant = document.querySelector("#mea");

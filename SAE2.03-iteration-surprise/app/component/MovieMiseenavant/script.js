@@ -1,23 +1,3 @@
-// let templateFile = await fetch("./component/MovieMiseenavant/template.html");
-// let template = await templateFile.text();
-
-// let Moviemiseenavant = {};
-
-// Moviemiseenavant.format = function (movies) {
-//   let html = "";
-//   movies.forEach((movie) => {
-//     let movieHtml = template;
-//     movieHtml = movieHtml.replace("{{titre}}", movie.name);
-//     movieHtml = movieHtml.replace("{{image}}", movie.image);
-//     movieHtml = movieHtml.replace("{{desc}}", movie.description);
-  
-//     html += movieHtml;
-//   });
-//   return html;
-// };
-
-// export { Moviemiseenavant };
-
 let MovieMiseenavant = {};
 
 async function loadTemplate() {
@@ -43,7 +23,7 @@ MovieMiseenavant.format = async function (movies) {
     card += `
       <div class="mea__card" onclick="C.handlerDetail(${movie.id})" style="--i:${index + 1}">
         <div class="mea__img">
-          <img class="mea__image" src="https://mmi.unilim.fr/~pradeau49/SAE2.03-starter-project/server/images/${image}" alt="${name}" />
+          <img class="mea__image" src="https://mmi.unilim.fr/~pradeau49/SAE2.03-PRADEAU/SAE2.03-iteration-surprise/server/images/${image}" alt="${name}" />
           <div class="mea__overlay">
             <h3 class="mea__name">${name}</h3>
             <p class="mea__desc">${description}</p>

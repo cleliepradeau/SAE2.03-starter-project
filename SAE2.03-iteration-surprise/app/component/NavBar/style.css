@@ -3,20 +3,22 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 3rem;
+  padding: 0;
   color: var(--color-fg);
-  background-color: var(--color-black);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-bg);
+  font-family: var(--ff-sans);
+  border: var(--color-gray-light) 1px solid;
+
 
   .navbar__list {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
+
   }
 
   .navbar__item {
     --_offset: 0.2rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.5rem;
     text-decoration: underline;
     text-decoration-thickness: 0.1rem;
     text-underline-offset: var(--_offset);
@@ -32,32 +34,24 @@
   }
 }
 
+.navbar__search {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+
+}
+
 .navbar__profile {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  padding: 0 1rem;
+  border-left: solid var(--color-gray-light) 1px;
+
 }
 
-.navbar__label {
-  margin-right: 0.5rem;
-  color: var(--color-fg);
-  font-weight: 600;
-}
-
+.navbar__label,
 .navbar__select {
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
-  border: none;
-  background-color: #222;
-  color: #fff;
-  font-size: 1rem;
-  outline: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.navbar__select:hover {
-  background-color: #333;
+  display: none;
 }
 
 .navbar__image {
@@ -71,4 +65,31 @@
 
 .navbar__image:hover {
   transform: scale(1.1);
+}
+
+@media (min-width: 48rem) {
+  .navbar__label {
+    display: flex;
+    margin-right: 0.5rem;
+    color: var(--color-fg);
+    font-weight: 600;
+  }
+
+  .navbar__select {
+    display: flex;
+    padding: 0.4rem 0.8rem;
+    margin-right: 1rem;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--color-bg);
+    color: var(--color-black);
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .navbar__select:hover {
+    background-color: var(--color-bg);
+  }
 }

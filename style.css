@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+:root {
+  /* Primitive Tokens */
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-gray-light: #bfbfbf;
+  --color-gray: #6F6F6F;
+  --color-gray-dark: #393939;
+  --color-blue-dark: #041E42;
+  --color-bg-blue: #001830;
+  --color-red: #ED1C24;
+  --color-red-dark: #A40203;
+  --ff-sans: "Source Sans 3", sans-serif;
+
+  /* Sementic Tokens */
+  --color-bg: var(--color-white);
+  --color-title: var(--color-blue-dark);
+  --color-desc: var(--color-gray);
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Prevent font size inflation */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  scroll-behavior: smooth;
+}
+
+/* Remove default margin in favour of better control in authored CSS */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* Set shorter line heights on headings and interactive elements */
+h1,
+h2,
+h3,
+h4,
+button,
+input,
+label {
+  line-height: 1.1;
+}
+
+/* Balance text wrapping on headings */
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+  min-height: 10em;
+}
+
+/* Anything that has been anchored to should have extra scroll margin */
+
+body {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.sae {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  font-family: var(--ff-sans);
+  color: var(--color-blue-dark);
+  font-size: 1.5rem;
+  background-image: url("assets/Cover.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.sae__title {
+  font-size: 10rem;
+
+}
+
+.sae__desc {
+  font-size: 2.5rem;
+}
+
+.sae__list {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  /* color: var(--color-white); */
+
+  list-style: none;
+  gap: 3rem;
+}
+
+.sae__list__title {
+  text-align: center;
+  font-weight: 600;
+}
+
+.sae__liname {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+  border: 1px solid var(--color-blue-dark);
+  border-radius: 1.75rem;
+  padding: 1rem 2rem;
+  background-color: var(--color-blue-dark);
+  width: 20rem;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.sae__liname:hover {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-blue-dark);
+  transform: scale(1.05);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.sae__btn {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+
+  color: var(--color-white);
+  transition: color 0.3s ease-in-out;
+}
+
+.sae__liname:hover .sae__btn {
+  color: var(--color-blue-dark);
+}
+
+@media (max-width: 48rem) {
+  .sae {
+    font-size: 1rem;
+  }
+
+  .sae__title {
+    font-size: 5rem;
+  }
+
+  .sae__desc {
+    font-size: 1.5rem;
+  }
+
+  .sae__list {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .sae__liname {
+    font-size: 1.5rem;
+  }
+}

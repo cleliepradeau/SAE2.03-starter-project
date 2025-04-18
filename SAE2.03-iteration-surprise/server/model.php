@@ -13,10 +13,15 @@
  * DBLOGIN : Nom d'utilisateur pour se connecter à la base de données.
  * DBPWD : Mot de passe pour se connecter à la base de données.
  */
+// define("HOST", "localhost");
+// define("DBNAME", "pradeau49");
+// define("DBLOGIN", "pradeau49");
+// define("DBPWD", "pradeau49");
+
 define("HOST", "localhost");
-define("DBNAME", "pradeau49");
-define("DBLOGIN", "pradeau49");
-define("DBPWD", "pradeau49");
+define("DBNAME", "SAE203");
+define("DBLOGIN", "root");
+define("DBPWD", "Cleliepradeau&2303");
 
 
 function getMovie($age = 0) {
@@ -211,9 +216,10 @@ function getAllCategories() {
 function getFavoris($id_profile){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     $sql = "
-        SELECT m.*
+        SELECT m.*, c.name AS category_name
         FROM Favoris f
         JOIN Movie m ON f.id_movie = m.id
+        JOIN Category c ON m.id_category = c.id
         WHERE f.id_profile = :id_profile
     ";
     $stmt = $cnx->prepare($sql);

@@ -117,7 +117,7 @@
       const dob = selectedOption.getAttribute("data-dob");
       const imageFilename = selectedOption.getAttribute("data-img");
       const picture = document.querySelector("#profile-image");
-      const base = "https://mmi.unilim.fr/~pradeau49/SAE2.03-PRADEAU/SAE2.03-iteration-surprise/server/images/";
+      const base = "../server/images/";
       picture.src = base + imageFilename;
       // Appel de films filtrés par ID de profil
       let data = await DataMovie.requestMovies(profileId); // Remplacer profileId
